@@ -1,0 +1,67 @@
+[
+  {
+    "number": 1,
+    "created_at": "2023-01-15T10:30:00Z",
+    "url": "https://api.github.com/repos/testorg/testrepo/secret-scanning/alerts/1",
+    "html_url": "https://github.com/testorg/testrepo/security/secret-scanning/1",
+    "state": "open",
+    "resolution": null,
+    "secret_type": "github_personal_access_token",
+    "secret_type_display_name": "GitHub Personal Access Token",
+    "secret": "ghp_test1234567890abcdefghijklmnopqrstuvw",
+    "locations": [
+      {
+        "type": "commit",
+        "details": {
+          "path": "config/settings.py",
+          "start_line": 42,
+          "end_line": 42,
+          "start_column": 15,
+          "end_column": 55,
+          "blob_sha": "abc123def456",
+          "blob_url": "https://api.github.com/repos/testorg/testrepo/git/blobs/abc123def456",
+          "commit_sha": "f14d7debf9775f957cf4f1e8176da0786431f72b",
+          "commit_url": "https://api.github.com/repos/testorg/testrepo/git/commits/f14d7debf9775f957cf4f1e8176da0786431f72b"
+        }
+      }
+    ]
+  },
+  {
+    "number": 2,
+    "created_at": "2023-02-20T14:22:00Z",
+    "url": "https://api.github.com/repos/testorg/testrepo/secret-scanning/alerts/2",
+    "html_url": "https://github.com/testorg/testrepo/security/secret-scanning/2",
+    "state": "open",
+    "resolution": null,
+    "secret_type": "aws_access_key_id",
+    "secret_type_display_name": "AWS Access Key",
+    "secret": "AKIAIOSFODNN7EXAMPLE",
+    "locations": [
+      {
+        "type": "commit",
+        "details": {
+          "path": ".env",
+          "start_line": 5,
+          "end_line": 5,
+          "start_column": 1,
+          "end_column": 40,
+          "blob_sha": "def456ghi789",
+          "blob_url": "https://api.github.com/repos/testorg/testrepo/git/blobs/def456ghi789",
+          "commit_sha": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+          "commit_url": "https://api.github.com/repos/testorg/testrepo/git/commits/a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0"
+        }
+      }
+    ]
+  },
+  {
+    "number": 3,
+    "created_at": "2023-03-10T09:15:00Z",
+    "url": "https://api.github.com/repos/testorg/testrepo/secret-scanning/alerts/3",
+    "html_url": "https://github.com/testorg/testrepo/security/secret-scanning/3",
+    "state": "resolved",
+    "resolution": "revoked",
+    "secret_type": "slack_api_token",
+    "secret_type_display_name": "Slack API Token",
+    "secret": "xoxb-1234567890-1234567890123-abcdefghijklmnopqrstuvwx"
+  }
+]
