@@ -1,0 +1,94 @@
+{
+  "mappings": [
+    {
+      "pattern": "AWS.*Access.*Key",
+      "node_kind": "AWSUser",
+      "edge_kind": "CanAuthenticate",
+      "create_edge_to": "AWSAccount"
+    },
+    {
+      "pattern": "AWS.*Secret.*Key",
+      "node_kind": "AWSUser",
+      "edge_kind": "CanAuthenticate",
+      "create_edge_to": "AWSAccount"
+    },
+    {
+      "pattern": "AWS.*Session.*Token",
+      "node_kind": "AWSUser",
+      "edge_kind": "CanAuthenticate",
+      "create_edge_to": "AWSAccount"
+    },
+    {
+      "pattern": "Azure.*Client.*Secret",
+      "node_kind": "AZServicePrincipal",
+      "edge_kind": "CanAuthenticate",
+      "create_edge_to": "AZTenant"
+    },
+    {
+      "pattern": "Azure.*Storage.*Account.*Key",
+      "node_kind": "AZServicePrincipal",
+      "edge_kind": "CanAuthenticate",
+      "create_edge_to": "AZStorageAccount"
+    },
+    {
+      "pattern": "GCP.*Service.*Account",
+      "node_kind": "GCPServiceAccount",
+      "edge_kind": "CanAuthenticate",
+      "create_edge_to": "GCPProject"
+    },
+    {
+      "pattern": "GCP.*API.*Key",
+      "node_kind": "GCPUser",
+      "edge_kind": "CanAuthenticate",
+      "create_edge_to": "GCPProject"
+    },
+    {
+      "pattern": "GitHub.*Personal.*Access.*Token",
+      "node_kind": "Base",
+      "edge_kind": "HasCredential",
+      "create_edge_to": null
+    },
+    {
+      "pattern": "GitLab.*Personal.*Access.*Token",
+      "node_kind": "Base",
+      "edge_kind": "HasCredential",
+      "create_edge_to": null
+    },
+    {
+      "pattern": "JWT.*Token",
+      "node_kind": "Base",
+      "edge_kind": "HasSession",
+      "create_edge_to": null
+    },
+    {
+      "pattern": "Private.*Key.*PEM",
+      "node_kind": "Base",
+      "edge_kind": "HasCredential",
+      "create_edge_to": null
+    },
+    {
+      "pattern": "RSA.*Private.*Key",
+      "node_kind": "Base",
+      "edge_kind": "HasCredential",
+      "create_edge_to": null
+    },
+    {
+      "pattern": "SSH.*Private.*Key",
+      "node_kind": "Base",
+      "edge_kind": "CanSSH",
+      "create_edge_to": null
+    },
+    {
+      "pattern": "Database.*Password",
+      "node_kind": "Base",
+      "edge_kind": "SQLAdmin",
+      "create_edge_to": null
+    },
+    {
+      "pattern": "Generic.*API.*Key",
+      "node_kind": "Base",
+      "edge_kind": "HasCredential",
+      "create_edge_to": null
+    }
+  ]
+}
