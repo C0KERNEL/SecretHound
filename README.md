@@ -195,39 +195,108 @@ python secrethound.py \
     -c custom_mappings.json
 ```
 
-## Custom Mappings
+## Custom Mappings & Visualization
 
-Create a JSON file to customize how secrets map to BloodHound node types:
+SecretHound supports custom mappings to categorize secrets by technology and visualize them with color-coded icons in BloodHound.
+
+### Mapping Configuration
+
+Create a JSON file to customize how secrets map to BloodHound node types and colors:
 
 ```json
 {
   "mappings": [
     {
-      "pattern": "AWS.*Access.*Key",
-      "node_kind": "AWSUser",
-      "edge_kind": "CanAuthenticate",
-      "create_edge_to": "AWSAccount"
+      "pattern": "AWS",
+      "node_kind": "AWSBase",
+      "color": "#FF9900"
     },
     {
-      "pattern": "GitHub.*Token",
-      "node_kind": "Base",
-      "edge_kind": "HasCredential",
-      "create_edge_to": null
+      "pattern": "Azure",
+      "node_kind": "AZBase",
+      "color": "#0078D4"
+    },
+    {
+      "pattern": "GCP",
+      "node_kind": "GCPBase",
+      "color": "#4285F4"
+    },
+    {
+      "pattern": "GitHub",
+      "node_kind": "GHBase",
+      "color": "#6e5494"
     }
-  ]
+  ],
+  "default_color": "#ffc800"
 }
 ```
 
 ### Mapping Fields
 
-- **pattern**: Regex pattern to match secret type
-- **node_kind**: BloodHound node kind (e.g., AWSUser, AZServicePrincipal, GCPUser)
-- **edge_kind**: Relationship type (e.g., CanAuthenticate, HasCredential)
-- **create_edge_to**: Target node kind for relationship (optional)
+- **pattern**: Regex pattern to match secret type (case-insensitive)
+- **node_kind**: BloodHound node kind to add (e.g., AWSBase, AZBase, GCPBase, GHBase)
+- **color**: Hex color code for the icon in BloodHound
+- **default_color**: Color for secrets that don't match any pattern
 
-### Supported Node Kinds
+### Default Color Scheme
 
-### Supported Edge Kinds
+| Secret Type | Node Kind | Color | Hex Code |
+|-------------|-----------|-------|----------|
+| AWS | AWSBase | 🟠 Orange | `#FF9900` |
+| Azure | AZBase | 🔵 Blue | `#0078D4` |
+| GCP | GCPBase | 🔵 Light Blue | `#4285F4` |
+| GitHub | GHBase | 🟣 Purple | `#6e5494` |
+| Default/Other | Secret | 🟡 Yellow | `#ffc800` |
+
+### Using Custom Mappings
+
+```bash
+# Without mappings - all secrets are just "Secret" nodes
+python secrethound.py -t noseyparker -i input.json -o output.json
+
+# With mappings - secrets get categorized (e.g., AWSBase, AZBase)
+python secrethound.py -t noseyparker -i input.json -o output.json -c example_mappings.json
+```
+
+### Registering Custom Icons in BloodHound
+
+After generating your BloodHound data, register the custom icons:
+
+```bash
+# Register icons with default mappings
+python custom_icons.py --token YOUR_BLOODHOUND_TOKEN
+
+# Register icons with custom mappings file
+python custom_icons.py --token YOUR_TOKEN -m custom_mappings.json
+
+# Use custom BloodHound URL
+python custom_icons.py --token YOUR_TOKEN --url http://bloodhound.local:8080/api/v2/custom-nodes
+```
+
+**How to get your BloodHound token:**
+1. Log in to BloodHound CE web interface
+2. Go to your user profile or API settings
+3. Generate an API token
+4. Use it with the `--token` flag
+
+### Node Structure
+
+When using custom mappings, secret nodes have multiple kinds for filtering:
+
+```json
+{
+  "kinds": ["Secret", "AWSBase", "StargateNetwork"],
+  "properties": {
+    "secret_type": "AWS Secret Access Key",
+    "secret_value_redacted": "AKIA...KEY"
+  }
+}
+```
+
+This allows you to query by:
+- `MATCH (s:Secret)` - All secrets
+- `MATCH (s:AWSBase)` - Only AWS secrets
+- `MATCH (s:Secret:AWSBase)` - AWS secrets (explicit)
 
 ## OpenGraph Compatibility
 
@@ -264,19 +333,58 @@ By default, SecretHound **redacts secret values**: `AKIA...MPLE`
 
 
 
-### Example Queries
+### Example BloodHound Queries
 
 ```cypher
 // Find all secrets
 MATCH (s:Secret) RETURN s
 
-// Find AWS secrets
-MATCH (s:Secret)-[:CanAuthenticate]->(u:AWSUser) RETURN s, u
+// Find all AWS secrets
+MATCH (s:AWSBase) RETURN s
 
-// Find credential escalation paths
-MATCH p=(s:Secret)-[*..3]->(admin:AZUser)
-WHERE admin.isAdmin = true
-RETURN p
+// Find secrets in a specific repository
+MATCH (r:GHRepository)-[:ContainsCredentialsFor]->(s:Secret)
+WHERE r.name =~ '.*myrepo.*'
+RETURN r, s
+
+// Find all AWS secrets in GitHub repositories
+MATCH (r:GHRepository)-[:ContainsCredentialsFor]->(s:Secret:AWSBase)
+RETURN r, s
+
+// Count secrets by type
+MATCH (s:Secret)
+RETURN s.secret_type, count(s) as count
+ORDER BY count DESC
+
+// Find secrets with specific commit information
+MATCH (s:Secret)
+WHERE s.commit IS NOT NULL
+RETURN s.secret_type, s.file_path, s.commit
+```
+
+### Complete Workflow Example
+
+```bash
+# 1. Scan repositories with NoseyParker
+noseyparker scan --datastore np.db https://github.com/myorg/myrepo.git
+noseyparker report --datastore np.db --format json > noseyparker_output.json
+
+# 2. Convert to BloodHound format with custom mappings
+python secrethound.py \
+    -t noseyparker \
+    -i noseyparker_output.json \
+    -o bloodhound_secrets.json \
+    -c example_mappings.json \
+    -v
+
+# 3. Register custom icons in BloodHound (one-time setup)
+python custom_icons.py --token YOUR_BLOODHOUND_TOKEN
+
+# 4. Upload bloodhound_secrets.json to BloodHound CE
+# Via web UI: File Upload → Select bloodhound_secrets.json
+
+# 5. Query secrets in BloodHound
+# Use Cypher queries in the BloodHound interface
 ```
 
 ## Acknowledgments

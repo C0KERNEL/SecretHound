@@ -17,7 +17,6 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
-from enum import Enum
 
 try:
     from bhopengraph.OpenGraph import OpenGraph
@@ -36,54 +35,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-
-class SecretType(Enum):
-    """Enumeration of secret types and their default BloodHound node mappings"""
-    # AWS mappings (using AWSUser for principals, compatible with AWS OpenGraph extensions)
-    AWS_ACCESS_KEY = "AWSUser"
-    AWS_SECRET_KEY = "AWSUser"
-    AWS_SESSION_TOKEN = "AWSUser"
-    
-    # Azure mappings
-    AZURE_CLIENT_SECRET = "AZServicePrincipal"
-    AZURE_STORAGE_KEY = "AZServicePrincipal"
-    
-    # GCP mappings
-    GCP_API_KEY = "GCPUser"
-    GCP_SERVICE_ACCOUNT = "GCPServiceAccount"
-    
-    # Source control
-    GITHUB_TOKEN = "Base"
-    GITLAB_TOKEN = "Base"
-    
-    # Authentication tokens
-    JWT_TOKEN = "Base"
-    API_KEY = "Base"
-    
-    # Encryption keys
-    PRIVATE_KEY = "Base"
-    SSH_KEY = "Base"
-    
-    # Credentials
-    PASSWORD = "Base"
-    
-    # Password vault types (for future implementation)
-    ONEPASSWORD_VAULT = "Base"
-    LASTPASS_VAULT = "Base"
-    BITWARDEN_VAULT = "Base"
-    KEEPASS_VAULT = "Base"
-    
-    # Generic
-    GENERIC_SECRET = "Base"
-
-
 @dataclass
 class SecretMapping:
     """Configuration for mapping secrets to BloodHound nodes"""
     pattern: str  # Regex pattern or rule name to match
-    node_kind: str  # BloodHound node kind (e.g., AZUser, AZServicePrincipal)
-    edge_kind: str = "CanAuthenticate"  # Type of relationship
-    create_edge_to: Optional[str] = None  # Target node kind for edge
+    node_kind: str  # BloodHound node kind (e.g., AWSBase, AZBase, GCPBase, GHBase)
+    color: Optional[str] = None  # Icon color for BloodHound visualization
 
 
 @dataclass
@@ -115,87 +72,28 @@ class SecretsParser(ABC):
         self.default_mappings = self._get_default_mappings()
         
     def _get_default_mappings(self) -> List[SecretMapping]:
-        """Get default secret type to node kind mappings"""
-        return [
-            # AWS mappings
-            #TODO: map to AWSUser from https://github.com/VirtueSecurity/IAMhounddog 
-            SecretMapping("AWS", "AWSUser", "CanAuthenticate", "AWSAccount"),
-            SecretMapping("aws.*access.*key", "AWSUser", "CanAuthenticate", "AWSAccount"),
-            SecretMapping("aws.*secret.*key", "AWSUser", "CanAuthenticate", "AWSAccount"),
-            SecretMapping("aws.*session.*token", "AWSUser", "CanAuthenticate", "AWSAccount"),
-            
-            # Azure mappings
-            SecretMapping("Azure", "AZServicePrincipal", "CanAuthenticate", "AZTenant"),
-            SecretMapping("azure.*client.*secret", "AZServicePrincipal", "CanAuthenticate", "AZTenant"),
-            SecretMapping("azure.*storage", "AZServicePrincipal", "CanAuthenticate", "AZStorageAccount"),
-            
-            # GCP mappings
-            #TODO: review GCP-hound for mapping 
-            SecretMapping("GCP", "GCPServiceAccount", "CanAuthenticate", "GCPProject"),
-            SecretMapping("gcp.*service.*account", "GCPServiceAccount", "CanAuthenticate", "GCPProject"),
-            SecretMapping("gcp.*api.*key", "GCPUser", "CanAuthenticate", "GCPProject"),
-            
-            # GitHub/GitLab
-            # ideally, a GitHub access token is found and then this maps to a user
-            # https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-the-authenticated-user
-            SecretMapping("GitHub", "Base", "HasCredential"),
-            SecretMapping("GitLab", "Base", "HasCredential"),
-            
-            # Generic secrets
-            SecretMapping("API.*Key", "Base", "HasCredential"),
-            SecretMapping("Private.*Key", "Base", "HasCredential"),
-            SecretMapping("SSH.*Key", "Base", "CanSSH"),
-            SecretMapping("Password", "Base", "HasCredential"),
-        ]
+        """Get default secret type to node kind mappings (empty unless custom mappings provided via -c)"""
+        return []
     
     def get_node_kind_for_secret(self, secret_type: str) -> str:
         """
         Determine the appropriate BloodHound node kind for a secret type
-        
+
         Args:
             secret_type: The type of secret discovered
-            
+
         Returns:
             BloodHound node kind string
         """
         import re
-        
-        # Check custom mappings first
+
+        # Check custom mappings first (only applies when -c flag is used)
         for mapping in self.custom_mappings:
             if re.search(mapping.pattern, secret_type, re.IGNORECASE):
                 return mapping.node_kind
-        
-        # Check default mappings
-        for mapping in self.default_mappings:
-            if re.search(mapping.pattern, secret_type, re.IGNORECASE):
-                return mapping.node_kind
-        
-        # Default to Base if no match
-        return "Base"
-    
-    def get_edge_kind_for_secret(self, secret_type: str) -> str:
-        """
-        Determine the appropriate edge kind for a secret type
-        
-        Args:
-            secret_type: The type of secret discovered
-            
-        Returns:
-            Edge kind string
-        """
-        import re
-        
-        # Check custom mappings first
-        for mapping in self.custom_mappings:
-            if re.search(mapping.pattern, secret_type, re.IGNORECASE):
-                return mapping.edge_kind
-        
-        # Check default mappings
-        for mapping in self.default_mappings:
-            if re.search(mapping.pattern, secret_type, re.IGNORECASE):
-                return mapping.edge_kind
-        
-        return "HasCredential"
+
+        # Default to Secret if no match
+        return "Secret"
     
     def redact_value(self, value: str) -> str:
         """Redact a secret value while keeping some context"""
@@ -304,7 +202,7 @@ class BloodHoundGraphBuilder:
         if is_github:
             node_kinds = ["GHBase", "GHRepository"]
         else:
-            node_kinds = ["Repository", "Base"]
+            node_kinds = ["Repository"]
 
         # Create repository node
         repo_name = self._get_repository_name(repository_path)
@@ -376,10 +274,19 @@ class BloodHoundGraphBuilder:
             else:
                 props_dict['secret_value_redacted'] = parser.redact_value(finding.secret_value)
 
-            # Create secret node with simplified kinds
+            # Determine node kind based on mappings (if -c flag was used)
+            node_kind = parser.get_node_kind_for_secret(finding.secret_type)
+
+            # Build kinds list - always include "Secret", plus the mapped kind if different
+            if node_kind == "Secret":
+                kinds = ["Secret"]
+            else:
+                kinds = ["Secret", node_kind]
+
+            # Create secret node
             secret_node = Node(
                 id=secret_id,
-                kinds=["Secret", "Base"],
+                kinds=kinds,
                 properties=Properties(**props_dict)
             )
 
@@ -439,11 +346,10 @@ def load_custom_mappings(config_path: Path) -> List[SecretMapping]:
         mapping = SecretMapping(
             pattern=item['pattern'],
             node_kind=item['node_kind'],
-            edge_kind=item.get('edge_kind', 'HasCredential'),
-            create_edge_to=item.get('create_edge_to')
+            color=item.get('color')
         )
         mappings.append(mapping)
-    
+
     return mappings
 
 

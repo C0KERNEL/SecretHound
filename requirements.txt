@@ -1,0 +1,9 @@
+# SecretHound Requirements
+# Install with: pip install -r requirements.txt
+
+# Core dependencies
+bhopengraph>=0.1.0
+
+# HTTP requests (for GitHub API, Nemesis API, and BloodHound custom icons)
+requests>=2.31.0
+urllib3>=2.0.0
