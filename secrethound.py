@@ -13,6 +13,7 @@ import hashlib
 import logging
 import argparse
 import os
+import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Set
@@ -277,11 +278,17 @@ class BloodHoundGraphBuilder:
             # Determine node kind based on mappings (if -c flag was used)
             node_kind = parser.get_node_kind_for_secret(finding.secret_type)
 
-            # Build kinds list - always include "Secret", plus the mapped kind if different
+            # Build kinds list based on whether secret is mapped
             if node_kind == "Secret":
+                # Unmapped secrets just get the generic "Secret" kind
                 kinds = ["Secret"]
+            elif node_kind.endswith("Secret"):
+                # Mapped *Secret kinds get both the specific kind and the corresponding *Base kind
+                base_kind = node_kind.replace("Secret", "Base")
+                kinds = [node_kind, base_kind]
             else:
-                kinds = ["Secret", node_kind]
+                # For any other mapped kinds, just use that kind
+                kinds = [node_kind]
 
             # Create secret node
             secret_node = Node(
@@ -365,23 +372,20 @@ def main():
 SecretHound is a BloodHound OpenGraph extension for secrets.
 
 Examples:
-  # Fetch and parse GitHub Secret Scanning alerts (requires GitHub token)
-  python secrethound.py -t github --github-owner myorg --github-repo myrepo -o secrets.json
-
-  # Parse GitHub Secret Scanning JSON export
+  # Parse GitHub Secret Scanning JSON export from file
   python secrethound.py -t github -i github_alerts.json -o secrets.json
 
-  # Parse NoseyParker output
-  python secrethound.py -t noseyparker -i noseyparker_report.json -o secrets.json
+  # Parse NoseyParker output from stdin
+  noseyparker report --format json | python secrethound.py -t noseyparker -o secrets.json
 
-  # Parse TruffleHog output without redaction
-  python secrethound.py -t trufflehog -i trufflehog_output.jsonl -o secrets.json --no-redact
+  # Parse TruffleHog output from stdin without redaction
+  trufflehog git file://. --json | python secrethound.py -t trufflehog -o secrets.json --no-redact
 
-  # Use custom mappings
+  # Use custom mappings with file input
   python secrethound.py -t noseyparker -i report.json -o output.json -c mappings.json
 
-  # Parse Nemesis export
-  python secrethound.py -t nemesis -i nemesis_export.json -o secrets.json
+  # Parse Nemesis export from stdin
+  curl https://nemesis/api/credentials | python secrethound.py -t nemesis -o secrets.json
 
 Compatible with various OpenGraph extensions.
 Visit https://github.com/C0KERNEL/SecretHound for more information.
@@ -398,7 +402,7 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
     parser.add_argument(
         '-i', '--input',
         type=Path,
-        help='Input file path (JSON or JSONL) - not required for GitHub API mode'
+        help='Input file path (JSON or JSONL). Use "-" or omit to read from stdin'
     )
 
     parser.add_argument(
@@ -437,28 +441,6 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
     )
 
     parser.add_argument(
-        '--github-token',
-        help='GitHub personal access token (for github type API mode, or GITHUB_TOKEN env var)'
-    )
-
-    parser.add_argument(
-        '--github-owner',
-        help='GitHub repository owner/organization (for github type API mode)'
-    )
-
-    parser.add_argument(
-        '--github-repo',
-        help='GitHub repository name (for github type API mode)'
-    )
-
-    parser.add_argument(
-        '--github-include-locations',
-        action='store_true',
-        default=True,
-        help='Include location details for GitHub alerts (default: True)'
-    )
-
-    parser.add_argument(
         '-v', '--verbose',
         action='store_true',
         help='Enable verbose logging'
@@ -479,11 +461,7 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
     redact_secrets = not args.no_redact
 
     if args.type == 'github':
-        # Check if using API mode or file mode
-        github_token = args.github_token or os.environ.get('GITHUB_TOKEN')
-
         secret_parser = GitHubSecretScannerParser(
-            github_token=github_token,
             redact_secrets=redact_secrets,
             custom_mappings=custom_mappings
         )
@@ -509,23 +487,38 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
         return 1
 
     try:
-        # Handle GitHub API mode
-        if args.type == 'github' and args.github_owner and args.github_repo:
-            logger.info(f"Fetching GitHub Secret Scanning alerts from {args.github_owner}/{args.github_repo}")
-            findings = secret_parser.fetch_from_github_api(
-                owner=args.github_owner,
-                repo=args.github_repo,
-                include_locations=args.github_include_locations
-            )
+        # Determine input source: stdin or file
+        if args.input is None or str(args.input) == '-':
+            # Read from stdin
+            logger.info(f"Processing {args.type} output from stdin")
+            stdin_data = sys.stdin.read()
+
+            # Parse JSON data directly
+            try:
+                data = json.loads(stdin_data)
+                if isinstance(data, list):
+                    findings = []
+                    for item in data:
+                        findings.extend(secret_parser.parse_json(item))
+                else:
+                    findings = secret_parser.parse_json(data)
+            except json.JSONDecodeError:
+                # Try JSONL format
+                findings = []
+                for line in stdin_data.strip().split('\n'):
+                    if line.strip():
+                        try:
+                            data = json.loads(line)
+                            findings.extend(secret_parser.parse_json(data))
+                        except json.JSONDecodeError as e:
+                            logger.warning(f"Failed to parse line from stdin: {e}")
+
             logger.info(f"Found {len(findings)} secrets")
-        # Handle file input mode
-        elif args.input:
+        else:
+            # Read from file
             logger.info(f"Processing {args.type} output from {args.input}")
             findings = secret_parser.parse_file(args.input)
             logger.info(f"Found {len(findings)} secrets")
-        else:
-            logger.error("Either --input file or (--github-owner and --github-repo) must be provided")
-            return 1
         
         # Build BloodHound graph
         graph_builder = BloodHoundGraphBuilder(source_kind=args.source_kind)
