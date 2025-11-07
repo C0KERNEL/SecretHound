@@ -2,22 +2,22 @@
   "mappings": [
     {
       "pattern": "AWS",
-      "node_kind": "AWSBase",
+      "node_kind": "AWSSecret",
       "color": "#FF9900"
     },
     {
       "pattern": "Azure",
-      "node_kind": "AZBase",
+      "node_kind": "AZSecret",
       "color": "#0078D4"
     },
     {
       "pattern": "GCP",
-      "node_kind": "GCPBase",
+      "node_kind": "GCPSecret",
       "color": "#4285F4"
     },
     {
       "pattern": "GitHub",
-      "node_kind": "GHBase",
+      "node_kind": "GHSecret",
       "color": "#6e5494"
     }
   ],
