@@ -1,0 +1,294 @@
+{
+  "version": "1.0.0",
+  "description": "Minimal technology taxonomy for SecretHound - only major technologies (~25) get Base kinds, others default to Secret",
+  "technologies": {
+    "aws": {
+      "base_kind": "AWSBase",
+      "secret_kind": "AWSSecret",
+      "color": "#FF9900",
+      "display_name": "AWS"
+    },
+    "azure": {
+      "base_kind": "AZBase",
+      "secret_kind": "AZSecret",
+      "color": "#0078D4",
+      "display_name": "Azure"
+    },
+    "gcp": {
+      "base_kind": "GCPBase",
+      "secret_kind": "GCPSecret",
+      "color": "#4285F4",
+      "display_name": "Google Cloud Platform"
+    },
+    "github": {
+      "base_kind": "GHBase",
+      "secret_kind": "GHSecret",
+      "color": "#181717",
+      "display_name": "GitHub"
+    },
+    "gitlab": {
+      "base_kind": "GitLabBase",
+      "secret_kind": "GitLabSecret",
+      "color": "#FC6D26",
+      "display_name": "GitLab"
+    },
+    "atlassian": {
+      "base_kind": "AtlassianBase",
+      "secret_kind": "AtlassianSecret",
+      "color": "#0052CC",
+      "display_name": "Atlassian"
+    },
+    "hashicorp": {
+      "base_kind": "HashiCorpBase",
+      "secret_kind": "HashiCorpSecret",
+      "color": "#7B42BC",
+      "display_name": "HashiCorp"
+    },
+    "kubernetes": {
+      "base_kind": "K8sBase",
+      "secret_kind": "K8sSecret",
+      "color": "#326CE5",
+      "display_name": "Kubernetes"
+    },
+    "docker": {
+      "base_kind": "DockerBase",
+      "secret_kind": "DockerSecret",
+      "color": "#2496ED",
+      "display_name": "Docker"
+    },
+    "slack": {
+      "base_kind": "SlackBase",
+      "secret_kind": "SlackSecret",
+      "color": "#4A154B",
+      "display_name": "Slack"
+    },
+    "stripe": {
+      "base_kind": "StripeBase",
+      "secret_kind": "StripeSecret",
+      "color": "#635BFF",
+      "display_name": "Stripe"
+    },
+    "newrelic": {
+      "base_kind": "NewRelicBase",
+      "secret_kind": "NewRelicSecret",
+      "color": "#008C99",
+      "display_name": "New Relic"
+    },
+    "grafana": {
+      "base_kind": "GrafanaBase",
+      "secret_kind": "GrafanaSecret",
+      "color": "#F46800",
+      "display_name": "Grafana"
+    },
+    "doppler": {
+      "base_kind": "DopplerBase",
+      "secret_kind": "DopplerSecret",
+      "color": "#623CE6",
+      "display_name": "Doppler"
+    },
+    "okta": {
+      "base_kind": "OktaBase",
+      "secret_kind": "OktaSecret",
+      "color": "#007DC1",
+      "display_name": "Okta"
+    },
+    "openai": {
+      "base_kind": "OpenAIBase",
+      "secret_kind": "OpenAISecret",
+      "color": "#10A37F",
+      "display_name": "OpenAI"
+    },
+    "anthropic": {
+      "base_kind": "AnthropicBase",
+      "secret_kind": "AnthropicSecret",
+      "color": "#D4A373",
+      "display_name": "Anthropic"
+    },
+    "sendgrid": {
+      "base_kind": "SendGridBase",
+      "secret_kind": "SendGridSecret",
+      "color": "#1A82E2",
+      "display_name": "SendGrid"
+    },
+    "twilio": {
+      "base_kind": "TwilioBase",
+      "secret_kind": "TwilioSecret",
+      "color": "#F22F46",
+      "display_name": "Twilio"
+    },
+    "digitalocean": {
+      "base_kind": "DigitalOceanBase",
+      "secret_kind": "DigitalOceanSecret",
+      "color": "#0080FF",
+      "display_name": "DigitalOcean"
+    },
+    "heroku": {
+      "base_kind": "HerokuBase",
+      "secret_kind": "HerokuSecret",
+      "color": "#430098",
+      "display_name": "Heroku"
+    },
+    "databricks": {
+      "base_kind": "DatabricksBase",
+      "secret_kind": "DatabricksSecret",
+      "color": "#FF3621",
+      "display_name": "Databricks"
+    },
+    "jenkins": {
+      "base_kind": "JenkinsBase",
+      "secret_kind": "JenkinsSecret",
+      "color": "#D24939",
+      "display_name": "Jenkins"
+    },
+    "npm": {
+      "base_kind": "NPMBase",
+      "secret_kind": "NPMSecret",
+      "color": "#CB3837",
+      "display_name": "NPM"
+    },
+    "pypi": {
+      "base_kind": "PyPIBase",
+      "secret_kind": "PyPISecret",
+      "color": "#3775A9",
+      "display_name": "PyPI"
+    }
+  },
+  "scanner_mappings": {
+    "noseyparker": {
+      "np.anthropic.1": "anthropic",
+      "np.appsync.1": "aws",
+      "np.atlassian.1": "atlassian",
+      "np.aws.2": "aws",
+      "np.aws.4": "aws",
+      "np.aws.5": "aws",
+      "np.aws.6": "aws",
+      "np.azure.1": "azure",
+      "np.azure.2": "azure",
+      "np.azure.3": "azure",
+      "np.azure.4": "azure",
+      "np.databricks.1": "databricks",
+      "np.digitalocean.1": "digitalocean",
+      "np.digitalocean.2": "digitalocean",
+      "np.digitalocean.3": "digitalocean",
+      "np.dockerhub.1": "docker",
+      "np.doppler.1": "doppler",
+      "np.doppler.2": "doppler",
+      "np.doppler.3": "doppler",
+      "np.doppler.4": "doppler",
+      "np.doppler.5": "doppler",
+      "np.doppler.6": "doppler",
+      "np.github.1": "github",
+      "np.github.2": "github",
+      "np.github.3": "github",
+      "np.github.4": "github",
+      "np.github.6": "github",
+      "np.github.7": "github",
+      "np.gitlab.1": "gitlab",
+      "np.gitlab.2": "gitlab",
+      "np.gitlab.3": "gitlab",
+      "np.google.2": "gcp",
+      "np.google.3": "gcp",
+      "np.google.4": "gcp",
+      "np.google.5": "gcp",
+      "np.google.6": "gcp",
+      "np.grafana.1": "grafana",
+      "np.grafana.2": "grafana",
+      "np.grafana.3": "grafana",
+      "np.hashicorp.1": "hashicorp",
+      "np.hashicorp.2": "hashicorp",
+      "np.hashicorp.3": "hashicorp",
+      "np.hashicorp.4": "hashicorp",
+      "np.hashicorp.5": "hashicorp",
+      "np.hashicorp.6": "hashicorp",
+      "np.hashicorp.7": "hashicorp",
+      "np.heroku.1": "heroku",
+      "np.jenkins.1": "jenkins",
+      "np.jenkins.2": "jenkins",
+      "np.kubernetes.1": "kubernetes",
+      "np.kubernetes.2": "kubernetes",
+      "np.msteams.1": "azure",
+      "np.newrelic.1": "newrelic",
+      "np.newrelic.2": "newrelic",
+      "np.newrelic.3": "newrelic",
+      "np.newrelic.4": "newrelic",
+      "np.newrelic.5": "newrelic",
+      "np.newrelic.6": "newrelic",
+      "np.newrelic.7": "newrelic",
+      "np.newrelic.8": "newrelic",
+      "np.newrelic.9": "newrelic",
+      "np.npm.1": "npm",
+      "np.okta.1": "okta",
+      "np.openai.1": "openai",
+      "np.pypi.1": "pypi",
+      "np.sendgrid.1": "sendgrid",
+      "np.slack.2": "slack",
+      "np.slack.3": "slack",
+      "np.slack.4": "slack",
+      "np.slack.5": "slack",
+      "np.slack.6": "slack",
+      "np.stripe.1": "stripe",
+      "np.stripe.2": "stripe",
+      "np.twilio.1": "twilio"
+    },
+    "trufflehog": {
+      "AWS": "aws",
+      "AWSSessionKey": "aws",
+      "Azure": "azure",
+      "AzureStorage": "azure",
+      "AzureBatch": "azure",
+      "AzureContainerRegistry": "azure",
+      "AzureActiveDirectoryApplicationSecret": "azure",
+      "AzureCacheForRedisAccessKey": "azure",
+      "AzureCosmosDBKeyIdentifiable": "azure",
+      "AzureDevopsPersonalAccessToken": "azure",
+      "AzureFunctionKey": "azure",
+      "AzureMLWebServiceClassicIdentifiableKey": "azure",
+      "AzureSasToken": "azure",
+      "AzureSearchAdminKey": "azure",
+      "AzureSearchQueryKey": "azure",
+      "AzureManagementCertificate": "azure",
+      "AzureSQL": "azure",
+      "AzureOpenAI": "azure",
+      "AzureRefreshToken": "azure",
+      "AzureApiManagementRepositoryKey": "azure",
+      "AzureAPIManagementSubscriptionKey": "azure",
+      "AzureDirectManagementKey": "azure",
+      "AzureAppConfigConnectionString": "azure",
+      "MicrosoftTeamsWebhook": "azure",
+      "GCP": "gcp",
+      "GCPApplicationDefaultCredentials": "gcp",
+      "Github": "github",
+      "GitHubApp": "github",
+      "GitHubOld": "github",
+      "GitHubOauth2": "github",
+      "Gitlab": "gitlab",
+      "Dockerhub": "docker",
+      "Docker": "docker",
+      "Atlassian": "atlassian",
+      "HashiCorpVaultAuth": "hashicorp",
+      "KubeConfig": "kubernetes",
+      "Slack": "slack",
+      "SlackWebhook": "slack",
+      "Stripe": "stripe",
+      "StripePaymentIntent": "stripe",
+      "NewRelicPersonalApiKey": "newrelic",
+      "Grafana": "grafana",
+      "GrafanaServiceAccount": "grafana",
+      "Doppler": "doppler",
+      "Okta": "okta",
+      "OpenAI": "openai",
+      "Anthropic": "anthropic",
+      "SendGrid": "sendgrid",
+      "Twilio": "twilio",
+      "TwilioApiKey": "twilio",
+      "DigitalOceanSpaces": "digitalocean",
+      "DigitalOceanToken": "digitalocean",
+      "DigitalOceanV2": "digitalocean",
+      "Heroku": "heroku",
+      "DatabricksToken": "databricks",
+      "Jenkins": "jenkins",
+      "NpmToken": "npm",
+      "PyPI": "pypi"
+    }
+  }
+}

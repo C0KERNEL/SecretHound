@@ -1,0 +1,1202 @@
+{
+  "version": "1.0.0",
+  "description": "Comprehensive technology taxonomy for SecretHound - all technologies get their own Base kinds",
+  "technologies": {
+    "aws": {
+      "base_kind": "AWSBase",
+      "secret_kind": "AWSSecret",
+      "color": "#FF9900",
+      "display_name": "AWS"
+    },
+    "azure": {
+      "base_kind": "AZBase",
+      "secret_kind": "AZSecret",
+      "color": "#0078D4",
+      "display_name": "Azure"
+    },
+    "gcp": {
+      "base_kind": "GCPBase",
+      "secret_kind": "GCPSecret",
+      "color": "#4285F4",
+      "display_name": "Google Cloud Platform"
+    },
+    "github": {
+      "base_kind": "GHBase",
+      "secret_kind": "GHSecret",
+      "color": "#181717",
+      "display_name": "GitHub"
+    },
+    "gitlab": {
+      "base_kind": "GitLabBase",
+      "secret_kind": "GitLabSecret",
+      "color": "#FC6D26",
+      "display_name": "GitLab"
+    },
+    "atlassian": {
+      "base_kind": "AtlassianBase",
+      "secret_kind": "AtlassianSecret",
+      "color": "#0052CC",
+      "display_name": "Atlassian"
+    },
+    "bitbucket": {
+      "base_kind": "BitbucketBase",
+      "secret_kind": "BitbucketSecret",
+      "color": "#0052CC",
+      "display_name": "Bitbucket"
+    },
+    "hashicorp": {
+      "base_kind": "HashiCorpBase",
+      "secret_kind": "HashiCorpSecret",
+      "color": "#7B42BC",
+      "display_name": "HashiCorp"
+    },
+    "kubernetes": {
+      "base_kind": "K8sBase",
+      "secret_kind": "K8sSecret",
+      "color": "#326CE5",
+      "display_name": "Kubernetes"
+    },
+    "docker": {
+      "base_kind": "DockerBase",
+      "secret_kind": "DockerSecret",
+      "color": "#2496ED",
+      "display_name": "Docker"
+    },
+    "vmware": {
+      "base_kind": "VMwareBase",
+      "secret_kind": "VMwareSecret",
+      "color": "#607078",
+      "display_name": "VMware"
+    },
+    "mongodb": {
+      "base_kind": "MongoDBBase",
+      "secret_kind": "MongoDBSecret",
+      "color": "#47A248",
+      "display_name": "MongoDB"
+    },
+    "postgresql": {
+      "base_kind": "PostgreSQLBase",
+      "secret_kind": "PostgreSQLSecret",
+      "color": "#4169E1",
+      "display_name": "PostgreSQL"
+    },
+    "npm": {
+      "base_kind": "NPMBase",
+      "secret_kind": "NPMSecret",
+      "color": "#CB3837",
+      "display_name": "NPM"
+    },
+    "pypi": {
+      "base_kind": "PyPIBase",
+      "secret_kind": "PyPISecret",
+      "color": "#3775A9",
+      "display_name": "PyPI"
+    },
+    "rubygems": {
+      "base_kind": "RubyGemsBase",
+      "secret_kind": "RubyGemsSecret",
+      "color": "#CC342D",
+      "display_name": "RubyGems"
+    },
+    "nuget": {
+      "base_kind": "NuGetBase",
+      "secret_kind": "NuGetSecret",
+      "color": "#004880",
+      "display_name": "NuGet"
+    },
+    "cratesio": {
+      "base_kind": "CratesIOBase",
+      "secret_kind": "CratesIOSecret",
+      "color": "#F46623",
+      "display_name": "crates.io"
+    },
+    "slack": {
+      "base_kind": "SlackBase",
+      "secret_kind": "SlackSecret",
+      "color": "#4A154B",
+      "display_name": "Slack"
+    },
+    "telegram": {
+      "base_kind": "TelegramBase",
+      "secret_kind": "TelegramSecret",
+      "color": "#26A5E4",
+      "display_name": "Telegram"
+    },
+    "stripe": {
+      "base_kind": "StripeBase",
+      "secret_kind": "StripeSecret",
+      "color": "#635BFF",
+      "display_name": "Stripe"
+    },
+    "square": {
+      "base_kind": "SquareBase",
+      "secret_kind": "SquareSecret",
+      "color": "#000000",
+      "display_name": "Square"
+    },
+    "shopify": {
+      "base_kind": "ShopifyBase",
+      "secret_kind": "ShopifySecret",
+      "color": "#96BF48",
+      "display_name": "Shopify"
+    },
+    "salesforce": {
+      "base_kind": "SalesforceBase",
+      "secret_kind": "SalesforceSecret",
+      "color": "#00A1E0",
+      "display_name": "Salesforce"
+    },
+    "newrelic": {
+      "base_kind": "NewRelicBase",
+      "secret_kind": "NewRelicSecret",
+      "color": "#008C99",
+      "display_name": "New Relic"
+    },
+    "grafana": {
+      "base_kind": "GrafanaBase",
+      "secret_kind": "GrafanaSecret",
+      "color": "#F46800",
+      "display_name": "Grafana"
+    },
+    "dynatrace": {
+      "base_kind": "DynatraceBase",
+      "secret_kind": "DynatraceSecret",
+      "color": "#1496FF",
+      "display_name": "Dynatrace"
+    },
+    "sonarqube": {
+      "base_kind": "SonarQubeBase",
+      "secret_kind": "SonarQubeSecret",
+      "color": "#4E9BCD",
+      "display_name": "SonarQube"
+    },
+    "doppler": {
+      "base_kind": "DopplerBase",
+      "secret_kind": "DopplerSecret",
+      "color": "#623CE6",
+      "display_name": "Doppler"
+    },
+    "okta": {
+      "base_kind": "OktaBase",
+      "secret_kind": "OktaSecret",
+      "color": "#007DC1",
+      "display_name": "Okta"
+    },
+    "auth0": {
+      "base_kind": "Auth0Base",
+      "secret_kind": "Auth0Secret",
+      "color": "#EB5424",
+      "display_name": "Auth0"
+    },
+    "openai": {
+      "base_kind": "OpenAIBase",
+      "secret_kind": "OpenAISecret",
+      "color": "#10A37F",
+      "display_name": "OpenAI"
+    },
+    "anthropic": {
+      "base_kind": "AnthropicBase",
+      "secret_kind": "AnthropicSecret",
+      "color": "#D4A373",
+      "display_name": "Anthropic"
+    },
+    "huggingface": {
+      "base_kind": "HuggingFaceBase",
+      "secret_kind": "HuggingFaceSecret",
+      "color": "#FFD21E",
+      "display_name": "HuggingFace"
+    },
+    "groq": {
+      "base_kind": "GroqBase",
+      "secret_kind": "GroqSecret",
+      "color": "#FF6B35",
+      "display_name": "Groq"
+    },
+    "sendgrid": {
+      "base_kind": "SendGridBase",
+      "secret_kind": "SendGridSecret",
+      "color": "#1A82E2",
+      "display_name": "SendGrid"
+    },
+    "mailgun": {
+      "base_kind": "MailgunBase",
+      "secret_kind": "MailgunSecret",
+      "color": "#F06B4B",
+      "display_name": "Mailgun"
+    },
+    "postmark": {
+      "base_kind": "PostmarkBase",
+      "secret_kind": "PostmarkSecret",
+      "color": "#FFDE00",
+      "display_name": "Postmark"
+    },
+    "twilio": {
+      "base_kind": "TwilioBase",
+      "secret_kind": "TwilioSecret",
+      "color": "#F22F46",
+      "display_name": "Twilio"
+    },
+    "mailchimp": {
+      "base_kind": "MailChimpBase",
+      "secret_kind": "MailChimpSecret",
+      "color": "#FFE01B",
+      "display_name": "MailChimp"
+    },
+    "digitalocean": {
+      "base_kind": "DigitalOceanBase",
+      "secret_kind": "DigitalOceanSecret",
+      "color": "#0080FF",
+      "display_name": "DigitalOcean"
+    },
+    "heroku": {
+      "base_kind": "HerokuBase",
+      "secret_kind": "HerokuSecret",
+      "color": "#430098",
+      "display_name": "Heroku"
+    },
+    "databricks": {
+      "base_kind": "DatabricksBase",
+      "secret_kind": "DatabricksSecret",
+      "color": "#FF3621",
+      "display_name": "Databricks"
+    },
+    "facebook": {
+      "base_kind": "FacebookBase",
+      "secret_kind": "FacebookSecret",
+      "color": "#1877F2",
+      "display_name": "Facebook"
+    },
+    "twitter": {
+      "base_kind": "TwitterBase",
+      "secret_kind": "TwitterSecret",
+      "color": "#1DA1F2",
+      "display_name": "Twitter"
+    },
+    "linkedin": {
+      "base_kind": "LinkedInBase",
+      "secret_kind": "LinkedInSecret",
+      "color": "#0A66C2",
+      "display_name": "LinkedIn"
+    },
+    "jenkins": {
+      "base_kind": "JenkinsBase",
+      "secret_kind": "JenkinsSecret",
+      "color": "#D24939",
+      "display_name": "Jenkins"
+    },
+    "teamcity": {
+      "base_kind": "TeamCityBase",
+      "secret_kind": "TeamCitySecret",
+      "color": "#000000",
+      "display_name": "TeamCity"
+    },
+    "postman": {
+      "base_kind": "PostmanBase",
+      "secret_kind": "PostmanSecret",
+      "color": "#FF6C37",
+      "display_name": "Postman"
+    },
+    "sourcegraph": {
+      "base_kind": "SourcegraphBase",
+      "secret_kind": "SourcegraphSecret",
+      "color": "#00B4F2",
+      "display_name": "Sourcegraph"
+    },
+    "figma": {
+      "base_kind": "FigmaBase",
+      "secret_kind": "FigmaSecret",
+      "color": "#F24E1E",
+      "display_name": "Figma"
+    },
+    "adobe": {
+      "base_kind": "AdobeBase",
+      "secret_kind": "AdobeSecret",
+      "color": "#FF0000",
+      "display_name": "Adobe"
+    },
+    "mapbox": {
+      "base_kind": "MapboxBase",
+      "secret_kind": "MapboxSecret",
+      "color": "#000000",
+      "display_name": "Mapbox"
+    },
+    "adafruit": {
+      "base_kind": "AdafruitBase",
+      "secret_kind": "AdafruitSecret",
+      "color": "#000000",
+      "display_name": "Adafruit"
+    },
+    "artifactory": {
+      "base_kind": "ArtifactoryBase",
+      "secret_kind": "ArtifactorySecret",
+      "color": "#40BE46",
+      "display_name": "Artifactory"
+    },
+    "blynk": {
+      "base_kind": "BlynkBase",
+      "secret_kind": "BlynkSecret",
+      "color": "#04C9F7",
+      "display_name": "Blynk"
+    },
+    "codeclimate": {
+      "base_kind": "CodeClimateBase",
+      "secret_kind": "CodeClimateSecret",
+      "color": "#000000",
+      "display_name": "CodeClimate"
+    },
+    "django": {
+      "base_kind": "DjangoBase",
+      "secret_kind": "DjangoSecret",
+      "color": "#092E20",
+      "display_name": "Django"
+    },
+    "dtrack": {
+      "base_kind": "DependencyTrackBase",
+      "secret_kind": "DependencyTrackSecret",
+      "color": "#3A4D54",
+      "display_name": "Dependency-Track"
+    },
+    "dropbox": {
+      "base_kind": "DropboxBase",
+      "secret_kind": "DropboxSecret",
+      "color": "#0061FF",
+      "display_name": "Dropbox"
+    },
+    "firecrawl": {
+      "base_kind": "FirecrawlBase",
+      "secret_kind": "FirecrawlSecret",
+      "color": "#FF6B35",
+      "display_name": "Firecrawl"
+    },
+    "gitalk": {
+      "base_kind": "GitalkBase",
+      "secret_kind": "GitalkSecret",
+      "color": "#6190E8",
+      "display_name": "Gitalk"
+    },
+    "gradle": {
+      "base_kind": "GradleBase",
+      "secret_kind": "GradleSecret",
+      "color": "#02303A",
+      "display_name": "Gradle"
+    },
+    "jina": {
+      "base_kind": "JinaBase",
+      "secret_kind": "JinaSecret",
+      "color": "#009191",
+      "display_name": "Jina"
+    },
+    "kagi": {
+      "base_kind": "KagiBase",
+      "secret_kind": "KagiSecret",
+      "color": "#FF6B35",
+      "display_name": "Kagi"
+    },
+    "nasa": {
+      "base_kind": "NASABase",
+      "secret_kind": "NASASecret",
+      "color": "#0B3D91",
+      "display_name": "NASA"
+    },
+    "particleio": {
+      "base_kind": "ParticleIOBase",
+      "secret_kind": "ParticleIOSecret",
+      "color": "#00ADED",
+      "display_name": "Particle.io"
+    },
+    "phpmailer": {
+      "base_kind": "PHPMailerBase",
+      "secret_kind": "PHPMailerSecret",
+      "color": "#777BB4",
+      "display_name": "PHPMailer"
+    },
+    "sauce": {
+      "base_kind": "SauceLabsBase",
+      "secret_kind": "SauceLabsSecret",
+      "color": "#E2231A",
+      "display_name": "Sauce Labs"
+    },
+    "stackhawk": {
+      "base_kind": "StackHawkBase",
+      "secret_kind": "StackHawkSecret",
+      "color": "#00D4AA",
+      "display_name": "StackHawk"
+    },
+    "tavily": {
+      "base_kind": "TavilyBase",
+      "secret_kind": "TavilySecret",
+      "color": "#6B4FBB",
+      "display_name": "Tavily"
+    },
+    "thingsboard": {
+      "base_kind": "ThingsBoardBase",
+      "secret_kind": "ThingsBoardSecret",
+      "color": "#305680",
+      "display_name": "ThingsBoard"
+    },
+    "truenas": {
+      "base_kind": "TrueNASBase",
+      "secret_kind": "TrueNASSecret",
+      "color": "#0095D5",
+      "display_name": "TrueNAS"
+    },
+    "wireguard": {
+      "base_kind": "WireGuardBase",
+      "secret_kind": "WireGuardSecret",
+      "color": "#88171A",
+      "display_name": "WireGuard"
+    },
+    "age": {
+      "base_kind": "AgeBase",
+      "secret_kind": "AgeSecret",
+      "color": "#000000",
+      "display_name": "Age Encryption"
+    },
+    "reactapp": {
+      "base_kind": "ReactBase",
+      "secret_kind": "ReactSecret",
+      "color": "#61DAFB",
+      "display_name": "React"
+    },
+    "coinbase": {
+      "base_kind": "CoinbaseBase",
+      "secret_kind": "CoinbaseSecret",
+      "color": "#0052FF",
+      "display_name": "Coinbase"
+    },
+    "firebase": {
+      "base_kind": "FirebaseBase",
+      "secret_kind": "FirebaseSecret",
+      "color": "#FFCA28",
+      "display_name": "Firebase"
+    },
+    "hubspot": {
+      "base_kind": "HubSpotBase",
+      "secret_kind": "HubSpotSecret",
+      "color": "#FF7A59",
+      "display_name": "HubSpot"
+    },
+    "airtable": {
+      "base_kind": "AirtableBase",
+      "secret_kind": "AirtableSecret",
+      "color": "#18BFFF",
+      "display_name": "Airtable"
+    },
+    "vercel": {
+      "base_kind": "VercelBase",
+      "secret_kind": "VercelSecret",
+      "color": "#000000",
+      "display_name": "Vercel"
+    },
+    "netlify": {
+      "base_kind": "NetlifyBase",
+      "secret_kind": "NetlifySecret",
+      "color": "#00C7B7",
+      "display_name": "Netlify"
+    },
+    "sanity": {
+      "base_kind": "SanityBase",
+      "secret_kind": "SanitySecret",
+      "color": "#F03E2F",
+      "display_name": "Sanity"
+    },
+    "sqlserver": {
+      "base_kind": "SQLServerBase",
+      "secret_kind": "SQLServerSecret",
+      "color": "#CC2927",
+      "display_name": "SQL Server"
+    },
+    "sendbird": {
+      "base_kind": "SendbirdBase",
+      "secret_kind": "SendbirdSecret",
+      "color": "#6211C8",
+      "display_name": "Sendbird"
+    },
+    "discord": {
+      "base_kind": "DiscordBase",
+      "secret_kind": "DiscordSecret",
+      "color": "#5865F2",
+      "display_name": "Discord"
+    },
+    "pulumi": {
+      "base_kind": "PulumiBase",
+      "secret_kind": "PulumiSecret",
+      "color": "#8A3391",
+      "display_name": "Pulumi"
+    },
+    "supabase": {
+      "base_kind": "SupabaseBase",
+      "secret_kind": "SupabaseSecret",
+      "color": "#3ECF8E",
+      "display_name": "Supabase"
+    },
+    "prefect": {
+      "base_kind": "PrefectBase",
+      "secret_kind": "PrefectSecret",
+      "color": "#024DFD",
+      "display_name": "Prefect"
+    },
+    "docusign": {
+      "base_kind": "DocuSignBase",
+      "secret_kind": "DocuSignSecret",
+      "color": "#003E7E",
+      "display_name": "DocuSign"
+    },
+    "couchbase": {
+      "base_kind": "CouchbaseBase",
+      "secret_kind": "CouchbaseSecret",
+      "color": "#EA2328",
+      "display_name": "Couchbase"
+    },
+    "tailscale": {
+      "base_kind": "TailscaleBase",
+      "secret_kind": "TailscaleSecret",
+      "color": "#000000",
+      "display_name": "Tailscale"
+    },
+    "klaviyo": {
+      "base_kind": "KlaviyoBase",
+      "secret_kind": "KlaviyoSecret",
+      "color": "#1B1B1B",
+      "display_name": "Klaviyo"
+    },
+    "voiceflow": {
+      "base_kind": "VoiceflowBase",
+      "secret_kind": "VoiceflowSecret",
+      "color": "#5D5FEF",
+      "display_name": "Voiceflow"
+    },
+    "portainer": {
+      "base_kind": "PortainerBase",
+      "secret_kind": "PortainerSecret",
+      "color": "#13BEF9",
+      "display_name": "Portainer"
+    },
+    "loggly": {
+      "base_kind": "LogglyBase",
+      "secret_kind": "LogglySecret",
+      "color": "#00A99D",
+      "display_name": "Loggly"
+    },
+    "metabase": {
+      "base_kind": "MetabaseBase",
+      "secret_kind": "MetabaseSecret",
+      "color": "#509EE3",
+      "display_name": "Metabase"
+    },
+    "lemonsqueezy": {
+      "base_kind": "LemonSqueezyBase",
+      "secret_kind": "LemonSqueezySecret",
+      "color": "#FFC233",
+      "display_name": "Lemon Squeezy"
+    },
+    "budibase": {
+      "base_kind": "BudibaseBase",
+      "secret_kind": "BudibaseSecret",
+      "color": "#000000",
+      "display_name": "Budibase"
+    },
+    "denodeploy": {
+      "base_kind": "DenoDeployBase",
+      "secret_kind": "DenoDeploySecret",
+      "color": "#000000",
+      "display_name": "Deno Deploy"
+    },
+    "stripo": {
+      "base_kind": "StripoBase",
+      "secret_kind": "StripoSecret",
+      "color": "#1A73E8",
+      "display_name": "Stripo"
+    },
+    "replyio": {
+      "base_kind": "ReplyIOBase",
+      "secret_kind": "ReplyIOSecret",
+      "color": "#5A67D8",
+      "display_name": "Reply.io"
+    },
+    "coda": {
+      "base_kind": "CodaBase",
+      "secret_kind": "CodaSecret",
+      "color": "#F46A54",
+      "display_name": "Coda"
+    },
+    "logzio": {
+      "base_kind": "LogzIOBase",
+      "secret_kind": "LogzIOSecret",
+      "color": "#F89B24",
+      "display_name": "Logz.io"
+    },
+    "eventbrite": {
+      "base_kind": "EventbriteBase",
+      "secret_kind": "EventbriteSecret",
+      "color": "#F6682F",
+      "display_name": "Eventbrite"
+    },
+    "requestfinance": {
+      "base_kind": "RequestFinanceBase",
+      "secret_kind": "RequestFinanceSecret",
+      "color": "#00E6A0",
+      "display_name": "Request Finance"
+    },
+    "overloop": {
+      "base_kind": "OverloopBase",
+      "secret_kind": "OverloopSecret",
+      "color": "#5B47FB",
+      "display_name": "Overloop"
+    },
+    "ngrok": {
+      "base_kind": "NgrokBase",
+      "secret_kind": "NgrokSecret",
+      "color": "#1F1F1F",
+      "display_name": "Ngrok"
+    },
+    "replicate": {
+      "base_kind": "ReplicateBase",
+      "secret_kind": "ReplicateSecret",
+      "color": "#000000",
+      "display_name": "Replicate"
+    },
+    "flyio": {
+      "base_kind": "FlyIOBase",
+      "secret_kind": "FlyIOSecret",
+      "color": "#7B3FF2",
+      "display_name": "Fly.io"
+    },
+    "builtwith": {
+      "base_kind": "BuiltWithBase",
+      "secret_kind": "BuiltWithSecret",
+      "color": "#1E88E5",
+      "display_name": "BuiltWith"
+    },
+    "jupiterone": {
+      "base_kind": "JupiterOneBase",
+      "secret_kind": "JupiterOneSecret",
+      "color": "#4A90E2",
+      "display_name": "JupiterOne"
+    },
+    "wiz": {
+      "base_kind": "WizBase",
+      "secret_kind": "WizSecret",
+      "color": "#FF6B00",
+      "display_name": "Wiz"
+    },
+    "pagarme": {
+      "base_kind": "PagarmeBase",
+      "secret_kind": "PagarmeSecret",
+      "color": "#00C853",
+      "display_name": "Pagar.me"
+    },
+    "onfleet": {
+      "base_kind": "OnfleetBase",
+      "secret_kind": "OnfleetSecret",
+      "color": "#3454D1",
+      "display_name": "Onfleet"
+    },
+    "intra42": {
+      "base_kind": "Intra42Base",
+      "secret_kind": "Intra42Secret",
+      "color": "#00BABC",
+      "display_name": "Intra 42"
+    },
+    "eraser": {
+      "base_kind": "EraserBase",
+      "secret_kind": "EraserSecret",
+      "color": "#6C63FF",
+      "display_name": "Eraser"
+    },
+    "larksuite": {
+      "base_kind": "LarkSuiteBase",
+      "secret_kind": "LarkSuiteSecret",
+      "color": "#00C1DE",
+      "display_name": "Lark Suite"
+    },
+    "endorlabs": {
+      "base_kind": "EndorLabsBase",
+      "secret_kind": "EndorLabsSecret",
+      "color": "#0066CC",
+      "display_name": "Endor Labs"
+    },
+    "elevenlabs": {
+      "base_kind": "ElevenLabsBase",
+      "secret_kind": "ElevenLabsSecret",
+      "color": "#000000",
+      "display_name": "ElevenLabs"
+    },
+    "netsuite": {
+      "base_kind": "NetSuiteBase",
+      "secret_kind": "NetSuiteSecret",
+      "color": "#0072CE",
+      "display_name": "NetSuite"
+    },
+    "robinhoodcrypto": {
+      "base_kind": "RobinhoodCryptoBase",
+      "secret_kind": "RobinhoodCryptoSecret",
+      "color": "#00C805",
+      "display_name": "Robinhood Crypto"
+    },
+    "nvapi": {
+      "base_kind": "NVAPIBase",
+      "secret_kind": "NVAPISecret",
+      "color": "#76B900",
+      "display_name": "NVIDIA API"
+    },
+    "railwayapp": {
+      "base_kind": "RailwayAppBase",
+      "secret_kind": "RailwayAppSecret",
+      "color": "#0B0D0E",
+      "display_name": "Railway"
+    },
+    "meraki": {
+      "base_kind": "MerakiBase",
+      "secret_kind": "MerakiSecret",
+      "color": "#78BE20",
+      "display_name": "Meraki"
+    },
+    "saladcloud": {
+      "base_kind": "SaladCloudBase",
+      "secret_kind": "SaladCloudSecret",
+      "color": "#32CD32",
+      "display_name": "Salad Cloud"
+    },
+    "box": {
+      "base_kind": "BoxBase",
+      "secret_kind": "BoxSecret",
+      "color": "#0061D5",
+      "display_name": "Box"
+    },
+    "apimetrics": {
+      "base_kind": "APIMetricsBase",
+      "secret_kind": "APIMetricsSecret",
+      "color": "#005EB8",
+      "display_name": "APIMetrics"
+    },
+    "weightsandbiases": {
+      "base_kind": "WeightsAndBiasesBase",
+      "secret_kind": "WeightsAndBiasesSecret",
+      "color": "#FFBE00",
+      "display_name": "Weights & Biases"
+    },
+    "zohocrm": {
+      "base_kind": "ZohoCRMBase",
+      "secret_kind": "ZohoCRMSecret",
+      "color": "#E42527",
+      "display_name": "Zoho CRM"
+    },
+    "godaddy": {
+      "base_kind": "GoDaddyBase",
+      "secret_kind": "GoDaddySecret",
+      "color": "#1BDBDB",
+      "display_name": "GoDaddy"
+    },
+    "flexport": {
+      "base_kind": "FlexportBase",
+      "secret_kind": "FlexportSecret",
+      "color": "#0C4DA2",
+      "display_name": "Flexport"
+    },
+    "twitch": {
+      "base_kind": "TwitchBase",
+      "secret_kind": "TwitchSecret",
+      "color": "#9146FF",
+      "display_name": "Twitch"
+    },
+    "telesign": {
+      "base_kind": "TelesignBase",
+      "secret_kind": "TelesignSecret",
+      "color": "#0066CC",
+      "display_name": "Telesign"
+    },
+    "hasura": {
+      "base_kind": "HasuraBase",
+      "secret_kind": "HasuraSecret",
+      "color": "#1EB4D4",
+      "display_name": "Hasura"
+    },
+    "webex": {
+      "base_kind": "WebexBase",
+      "secret_kind": "WebexSecret",
+      "color": "#049FD9",
+      "display_name": "Webex"
+    },
+    "tableau": {
+      "base_kind": "TableauBase",
+      "secret_kind": "TableauSecret",
+      "color": "#E97627",
+      "display_name": "Tableau"
+    },
+    "rootly": {
+      "base_kind": "RootlyBase",
+      "secret_kind": "RootlySecret",
+      "color": "#FF6B6B",
+      "display_name": "Rootly"
+    },
+    "phrase": {
+      "base_kind": "PhraseBase",
+      "secret_kind": "PhraseSecret",
+      "color": "#0E8EE9",
+      "display_name": "Phrase"
+    },
+    "photoroom": {
+      "base_kind": "PhotoroomBase",
+      "secret_kind": "PhotoroomSecret",
+      "color": "#6C5CE7",
+      "display_name": "Photoroom"
+    },
+    "snyk": {
+      "base_kind": "SnykBase",
+      "secret_kind": "SnykSecret",
+      "color": "#4C4A73",
+      "display_name": "Snyk"
+    }
+  },
+  "scanner_mappings": {
+    "noseyparker": {
+      "np.adafruit.1": "adafruit",
+      "np.adobe.1": "adobe",
+      "np.age.2": "age",
+      "np.atlassian.1": "atlassian",
+      "np.anthropic.1": "anthropic",
+      "np.artifactory.1": "artifactory",
+      "np.appsync.1": "aws",
+      "np.auth0.1": "auth0",
+      "np.aws.2": "aws",
+      "np.aws.4": "aws",
+      "np.aws.5": "aws",
+      "np.aws.6": "aws",
+      "np.azure.1": "azure",
+      "np.azure.2": "azure",
+      "np.azure.3": "azure",
+      "np.azure.4": "azure",
+      "np.bitbucket.1": "bitbucket",
+      "np.blynk.1": "blynk",
+      "np.blynk.2": "blynk",
+      "np.blynk.3": "blynk",
+      "np.blynk.8": "blynk",
+      "np.blynk.9": "blynk",
+      "np.codeclimate.1": "codeclimate",
+      "np.cratesio.1": "cratesio",
+      "np.databricks.1": "databricks",
+      "np.django.1": "django",
+      "np.dtrack.1": "dtrack",
+      "np.digitalocean.1": "digitalocean",
+      "np.digitalocean.2": "digitalocean",
+      "np.digitalocean.3": "digitalocean",
+      "np.dockerhub.1": "docker",
+      "np.doppler.1": "doppler",
+      "np.doppler.2": "doppler",
+      "np.doppler.3": "doppler",
+      "np.doppler.4": "doppler",
+      "np.doppler.5": "doppler",
+      "np.doppler.6": "doppler",
+      "np.dropbox.1": "dropbox",
+      "np.dynatrace.1": "dynatrace",
+      "np.facebook.1": "facebook",
+      "np.facebook.2": "facebook",
+      "np.figma.1": "figma",
+      "np.firecrawl.1": "firecrawl",
+      "np.gitalk.1": "gitalk",
+      "np.github.1": "github",
+      "np.github.2": "github",
+      "np.github.3": "github",
+      "np.github.4": "github",
+      "np.github.6": "github",
+      "np.github.7": "github",
+      "np.gitlab.1": "gitlab",
+      "np.gitlab.2": "gitlab",
+      "np.gitlab.3": "gitlab",
+      "np.google.2": "gcp",
+      "np.google.3": "gcp",
+      "np.google.4": "gcp",
+      "np.google.5": "gcp",
+      "np.google.6": "gcp",
+      "np.gradle.1": "gradle",
+      "np.grafana.1": "grafana",
+      "np.grafana.2": "grafana",
+      "np.grafana.3": "grafana",
+      "np.groq.1": "groq",
+      "np.hashicorp.1": "hashicorp",
+      "np.hashicorp.2": "hashicorp",
+      "np.hashicorp.3": "hashicorp",
+      "np.hashicorp.4": "hashicorp",
+      "np.hashicorp.5": "hashicorp",
+      "np.hashicorp.6": "hashicorp",
+      "np.hashicorp.7": "hashicorp",
+      "np.heroku.1": "heroku",
+      "np.huggingface.1": "huggingface",
+      "np.jenkins.1": "jenkins",
+      "np.jenkins.2": "jenkins",
+      "np.jina.1": "jina",
+      "np.kagi.1": "kagi",
+      "np.kubernetes.1": "kubernetes",
+      "np.kubernetes.2": "kubernetes",
+      "np.linkedin.2": "linkedin",
+      "np.mailchimp.1": "mailchimp",
+      "np.mailgun.1": "mailgun",
+      "np.mapbox.2": "mapbox",
+      "np.mapbox.3": "mapbox",
+      "np.msteams.1": "azure",
+      "np.mongodb.1": "mongodb",
+      "np.nasa.1": "nasa",
+      "np.newrelic.1": "newrelic",
+      "np.newrelic.2": "newrelic",
+      "np.newrelic.3": "newrelic",
+      "np.newrelic.4": "newrelic",
+      "np.newrelic.5": "newrelic",
+      "np.newrelic.6": "newrelic",
+      "np.newrelic.7": "newrelic",
+      "np.newrelic.8": "newrelic",
+      "np.newrelic.9": "newrelic",
+      "np.npm.1": "npm",
+      "np.nuget.1": "nuget",
+      "np.okta.1": "okta",
+      "np.openai.1": "openai",
+      "np.particleio.1": "particleio",
+      "np.particleio.2": "particleio",
+      "np.phpmailer.1": "phpmailer",
+      "np.postgres.1": "postgresql",
+      "np.postman.1": "postman",
+      "np.postmark.1": "postmark",
+      "np.pypi.1": "pypi",
+      "np.reactapp.1": "reactapp",
+      "np.reactapp.2": "reactapp",
+      "np.rubygems.1": "rubygems",
+      "np.salesforce.1": "salesforce",
+      "np.sauce.1": "sauce",
+      "np.sendgrid.1": "sendgrid",
+      "np.shopify.2": "shopify",
+      "np.shopify.3": "shopify",
+      "np.shopify.4": "shopify",
+      "np.shopify.5": "shopify",
+      "np.slack.2": "slack",
+      "np.slack.3": "slack",
+      "np.slack.4": "slack",
+      "np.slack.5": "slack",
+      "np.slack.6": "slack",
+      "np.sonarqube.1": "sonarqube",
+      "np.sourcegraph.1": "sourcegraph",
+      "np.square.1": "square",
+      "np.square.2": "square",
+      "np.stackhawk.1": "stackhawk",
+      "np.stripe.1": "stripe",
+      "np.stripe.2": "stripe",
+      "np.tavily.1": "tavily",
+      "np.teamcity.1": "teamcity",
+      "np.telegram.1": "telegram",
+      "np.thingsboard.1": "thingsboard",
+      "np.thingsboard.2": "thingsboard",
+      "np.thingsboard.3": "thingsboard",
+      "np.truenas.1": "truenas",
+      "np.truenas.2": "truenas",
+      "np.twilio.1": "twilio",
+      "np.twitter.2": "twitter",
+      "np.vmware.1": "vmware",
+      "np.wireguard.1": "wireguard",
+      "np.wireguard.2": "wireguard"
+    },
+    "trufflehog": {
+      "AWS": "aws",
+      "Azure": "azure",
+      "AzureStorage": "azure",
+      "AzureBatch": "azure",
+      "AzureContainerRegistry": "azure",
+      "AWSSessionKey": "aws",
+      "AzureActiveDirectoryApplicationSecret": "azure",
+      "AzureCacheForRedisAccessKey": "azure",
+      "AzureCosmosDBKeyIdentifiable": "azure",
+      "AzureDevopsPersonalAccessToken": "azure",
+      "AzureFunctionKey": "azure",
+      "AzureMLWebServiceClassicIdentifiableKey": "azure",
+      "AzureSasToken": "azure",
+      "AzureSearchAdminKey": "azure",
+      "AzureSearchQueryKey": "azure",
+      "AzureManagementCertificate": "azure",
+      "AzureSQL": "azure",
+      "AzureOpenAI": "azure",
+      "AzureRefreshToken": "azure",
+      "AzureApiManagementRepositoryKey": "azure",
+      "AzureAPIManagementSubscriptionKey": "azure",
+      "AzureDirectManagementKey": "azure",
+      "AzureAppConfigConnectionString": "azure",
+      "GCP": "gcp",
+      "GCPApplicationDefaultCredentials": "gcp",
+      "Github": "github",
+      "GitHubApp": "github",
+      "GitHubOld": "github",
+      "GitHubOauth2": "github",
+      "Gitlab": "gitlab",
+      "Dockerhub": "docker",
+      "Docker": "docker",
+      "Auth0oauth": "auth0",
+      "Auth0ManagementApiToken": "auth0",
+      "Slack": "slack",
+      "SlackWebhook": "slack",
+      "Stripe": "stripe",
+      "StripePaymentIntent": "stripe",
+      "Heroku": "heroku",
+      "Mailchimp": "mailchimp",
+      "Mailgun": "mailgun",
+      "NpmToken": "npm",
+      "OpenAI": "openai",
+      "PyPI": "pypi",
+      "SendGrid": "sendgrid",
+      "Groq": "groq",
+      "HuggingFace": "huggingface",
+      "SonarCloud": "sonarqube",
+      "Sourcegraph": "sourcegraph",
+      "SourcegraphCody": "sourcegraph",
+      "Twilio": "twilio",
+      "TwilioApiKey": "twilio",
+      "Okta": "okta",
+      "NewRelicPersonalApiKey": "newrelic",
+      "Grafana": "grafana",
+      "GrafanaServiceAccount": "grafana",
+      "DatabricksToken": "databricks",
+      "DigitalOceanSpaces": "digitalocean",
+      "DigitalOceanToken": "digitalocean",
+      "DigitalOceanV2": "digitalocean",
+      "Atlassian": "atlassian",
+      "MongoDB": "mongodb",
+      "Shopify": "shopify",
+      "Salesforce": "salesforce",
+      "SalesforceOauth2": "salesforce",
+      "SalesforceRefreshToken": "salesforce",
+      "HashiCorpVaultAuth": "hashicorp",
+      "KubeConfig": "kubernetes",
+      "RubyGems": "rubygems",
+      "Anthropic": "anthropic",
+      "Adafruit": "adafruit",
+      "AdafruitIO": "adafruit",
+      "Square": "square",
+      "SquareApp": "square",
+      "Squareup": "square",
+      "Facebook": "facebook",
+      "FacebookOAuth": "facebook",
+      "Twitter": "twitter",
+      "TwitterApiSecret": "twitter",
+      "TwitterConsumerkey": "twitter",
+      "LinkedIn": "linkedin",
+      "Jenkins": "jenkins",
+      "TeamCity": "teamcity",
+      "Postman": "postman",
+      "Figma": "figma",
+      "FigmaPersonalAccessToken": "figma",
+      "Adobe": "adobe",
+      "AdobeIO": "adobe",
+      "Mapbox": "mapbox",
+      "MapBox": "mapbox",
+      "Artifactory": "artifactory",
+      "ArtifactoryAccessToken": "artifactory",
+      "Blynk": "blynk",
+      "Codeclimate": "codeclimate",
+      "Codemagic": "codeclimate",
+      "Dropbox": "dropbox",
+      "Firecrawl": "firecrawl",
+      "Gitalk": "gitalk",
+      "Gradle": "gradle",
+      "Jina": "jina",
+      "Kagi": "kagi",
+      "Nasa": "nasa",
+      "Shopify": "shopify",
+      "StackHawk": "stackhawk",
+      "Tavily": "tavily",
+      "ThingsBoard": "thingsboard",
+      "TrueNAS": "truenas",
+      "WireGuard": "wireguard",
+      "Age": "age",
+      "React": "reactapp",
+      "Doppler": "doppler",
+      "Dynatrace": "dynatrace",
+      "Bitbucket": "bitbucket",
+      "BitbucketAppPassword": "bitbucket",
+      "Coinbase": "coinbase",
+      "CoinbaseWaaS": "coinbase",
+      "Firebase": "firebase",
+      "FirebaseCloudMessaging": "firebase",
+      "HubSpot": "hubspot",
+      "HubSpotApiKey": "hubspot",
+      "HubSpotOauth": "hubspot",
+      "Airtable": "airtable",
+      "AirtableApiKey": "airtable",
+      "AirtableMetadataApiKey": "airtable",
+      "AirtableOAuth": "airtable",
+      "AirtablePersonalAccessToken": "airtable",
+      "Vercel": "vercel",
+      "Netlify": "netlify",
+      "Sanity": "sanity",
+      "Postgres": "postgresql",
+      "PostgreSQL": "postgresql",
+      "SQLServer": "sqlserver",
+      "Postmark": "postmark",
+      "Sendbird": "sendbird",
+      "SendbirdOrganizationAPI": "sendbird",
+      "Telegram": "telegram",
+      "TelegramBotToken": "telegram",
+      "Discord": "discord",
+      "DiscordBotToken": "discord",
+      "DiscordWebhook": "discord",
+      "MicrosoftTeamsWebhook": "azure",
+      "NuGetApiKey": "nuget",
+      "Pulumi": "pulumi",
+      "Supabase": "supabase",
+      "SupabaseToken": "supabase",
+      "Prefect": "prefect",
+      "Docusign": "docusign",
+      "Couchbase": "couchbase",
+      "Tailscale": "tailscale",
+      "Klaviyo": "klaviyo",
+      "Voiceflow": "voiceflow",
+      "Portainer": "portainer",
+      "PortainerToken": "portainer",
+      "Loggly": "loggly",
+      "Metabase": "metabase",
+      "LemonSqueezy": "lemonsqueezy",
+      "Budibase": "budibase",
+      "DenoDeploy": "denodeploy",
+      "Stripo": "stripo",
+      "ReplyIO": "replyio",
+      "Coda": "coda",
+      "LogzIO": "logzio",
+      "Eventbrite": "eventbrite",
+      "RequestFinance": "requestfinance",
+      "Overloop": "overloop",
+      "Ngrok": "ngrok",
+      "Replicate": "replicate",
+      "FlyIO": "flyio",
+      "BuiltWith": "builtwith",
+      "JupiterOne": "jupiterone",
+      "Wiz": "wiz",
+      "Pagarme": "pagarme",
+      "Onfleet": "onfleet",
+      "Intra42": "intra42",
+      "Eraser": "eraser",
+      "LarkSuite": "larksuite",
+      "LarkSuiteApiKey": "larksuite",
+      "EndorLabs": "endorlabs",
+      "ElevenLabs": "elevenlabs",
+      "Netsuite": "netsuite",
+      "RobinhoodCrypto": "robinhoodcrypto",
+      "NVAPI": "nvapi",
+      "RailwayApp": "railwayapp",
+      "Meraki": "meraki",
+      "SaladCloudApiKey": "saladcloud",
+      "Box": "box",
+      "BoxOauth": "box",
+      "ApiMetrics": "apimetrics",
+      "WeightsAndBiases": "weightsandbiases",
+      "ZohoCRM": "zohocrm",
+      "GoDaddy": "godaddy",
+      "Flexport": "flexport",
+      "TwitchAccessToken": "twitch",
+      "Telesign": "telesign",
+      "Hasura": "hasura",
+      "WebexBot": "webex",
+      "Webex": "webex",
+      "TableauPersonalAccessToken": "tableau",
+      "Rootly": "rootly",
+      "PhraseAccessToken": "phrase",
+      "Photoroom": "photoroom",
+      "Snyk": "snyk",
+      "SnykKey": "snyk"
+    }
+  }
+}

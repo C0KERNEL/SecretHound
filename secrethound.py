@@ -28,6 +28,12 @@ except ImportError:
     print("Error: bhopengraph library not found. Install with: pip install bhopengraph")
     exit(1)
 
+try:
+    from taxonomy import Taxonomy
+except ImportError:
+    print("Error: taxonomy module not found. Ensure taxonomy.py is in the same directory.")
+    exit(1)
+
 
 # Configure logging
 logging.basicConfig(
@@ -59,18 +65,22 @@ class SecretFinding:
 
 class SecretsParser(ABC):
     """Abstract base class for parsing secret scanner output"""
-    
-    def __init__(self, redact_secrets: bool = True, custom_mappings: Optional[List[SecretMapping]] = None):
+
+    def __init__(self, redact_secrets: bool = True, custom_mappings: Optional[List[SecretMapping]] = None, taxonomy=None, scanner_name: str = ""):
         """
         Initialize the parser
-        
+
         Args:
             redact_secrets: If True, redact actual secret values in output
-            custom_mappings: Custom mappings from secret types to BloodHound nodes
+            custom_mappings: Custom mappings from secret types to BloodHound nodes (legacy)
+            taxonomy: Taxonomy instance for rule ID lookups
+            scanner_name: Name of scanner for taxonomy lookups
         """
         self.redact_secrets = redact_secrets
         self.custom_mappings = custom_mappings or []
         self.default_mappings = self._get_default_mappings()
+        self.taxonomy = taxonomy
+        self.scanner_name = scanner_name
         
     def _get_default_mappings(self) -> List[SecretMapping]:
         """Get default secret type to node kind mappings (empty unless custom mappings provided via -c)"""
@@ -81,14 +91,22 @@ class SecretsParser(ABC):
         Determine the appropriate BloodHound node kind for a secret type
 
         Args:
-            secret_type: The type of secret discovered
+            secret_type: The type of secret discovered (rule ID or type name)
 
         Returns:
-            BloodHound node kind string
+            BloodHound node kind string (e.g., 'AWSSecret', 'Secret')
         """
         import re
 
-        # Check custom mappings first (only applies when -c flag is used)
+        # First, try taxonomy lookup by rule ID (preferred method)
+        if self.taxonomy and self.scanner_name:
+            kinds = self.taxonomy.lookup_by_rule_id(self.scanner_name, secret_type)
+            if kinds:
+                # Return the secret_kind (e.g., 'AWSSecret')
+                # The graph builder will automatically add the base_kind too
+                return kinds[0]  # kinds is (secret_kind, base_kind)
+
+        # Fallback to legacy custom mappings (only applies when -c flag is used)
         for mapping in self.custom_mappings:
             if re.search(mapping.pattern, secret_type, re.IGNORECASE):
                 return mapping.node_kind
@@ -429,6 +447,13 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
         default='StargateNetwork',
         help='Source kind for BloodHound OpenGraph (default: StargateNetwork)'
     )
+
+    parser.add_argument(
+        '--taxonomy',
+        type=Path,
+        default=Path('taxonomy.json'),
+        help='Technology taxonomy file for mapping rule IDs to node kinds (default: taxonomy.json)'
+    )
     
     parser.add_argument(
         '--nemesis-url',
@@ -451,36 +476,57 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
     # Configure logging
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
-    
-    # Load custom mappings if provided
+
+    # Load taxonomy if the file exists
+    taxonomy = None
+    if args.taxonomy.exists():
+        try:
+            taxonomy = Taxonomy(args.taxonomy)
+            logger.info(f"Loaded taxonomy from {args.taxonomy}")
+        except Exception as e:
+            logger.warning(f"Failed to load taxonomy from {args.taxonomy}: {e}")
+            logger.warning("Continuing without taxonomy - secrets will default to 'Secret' kind")
+    else:
+        logger.warning(f"Taxonomy file not found: {args.taxonomy}")
+        logger.warning("Continuing without taxonomy - secrets will default to 'Secret' kind")
+
+    # Load custom mappings if provided (legacy support)
     custom_mappings = None
     if args.config:
         custom_mappings = load_custom_mappings(args.config)
-    
+
     # Create appropriate parser
     redact_secrets = not args.no_redact
 
     if args.type == 'github':
         secret_parser = GitHubSecretScannerParser(
             redact_secrets=redact_secrets,
-            custom_mappings=custom_mappings
+            custom_mappings=custom_mappings,
+            taxonomy=taxonomy,
+            scanner_name='github'
         )
     elif args.type == 'noseyparker':
         secret_parser = NoseyParkerParser(
             redact_secrets=redact_secrets,
-            custom_mappings=custom_mappings
+            custom_mappings=custom_mappings,
+            taxonomy=taxonomy,
+            scanner_name='noseyparker'
         )
     elif args.type == 'trufflehog':
         secret_parser = TruffleHogParser(
             redact_secrets=redact_secrets,
-            custom_mappings=custom_mappings
+            custom_mappings=custom_mappings,
+            taxonomy=taxonomy,
+            scanner_name='trufflehog'
         )
     elif args.type == 'nemesis':
         secret_parser = NemesisParser(
             nemesis_url=args.nemesis_url,
             api_key=args.nemesis_api_key,
             redact_secrets=redact_secrets,
-            custom_mappings=custom_mappings
+            custom_mappings=custom_mappings,
+            taxonomy=taxonomy,
+            scanner_name='nemesis'
         )
     else:
         logger.error(f"Unsupported scanner type: {args.type}")

@@ -3,7 +3,7 @@
 Custom Icons for SecretHound
 
 This script registers custom node icons in BloodHound Community Edition
-for secret types based on the mappings defined in example_mappings.json.
+for secret types based on the technology taxonomy.
 """
 
 import requests
@@ -12,11 +12,17 @@ import urllib3
 import argparse
 from pathlib import Path
 
+try:
+    from taxonomy import Taxonomy
+except ImportError:
+    print("Error: taxonomy module not found. Ensure taxonomy.py is in the same directory.")
+    exit(1)
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Default BloodHound API settings
 DEFAULT_URL = "http://127.0.0.1:8080/api/v2/custom-nodes"
-DEFAULT_MAPPINGS_FILE = "example_mappings.json"
+DEFAULT_TAXONOMY_FILE = "taxonomy.json"
 
 def define_icon(url, headers, icon_type, icon_name, icon_color):
     """Define a custom icon in BloodHound"""
@@ -47,10 +53,15 @@ def define_icon(url, headers, icon_type, icon_name, icon_color):
 
     return response.status_code == 200
 
-def load_mappings(mappings_file):
-    """Load secret mappings from JSON file"""
-    with open(mappings_file, 'r') as f:
-        return json.load(f)
+def load_taxonomy_colors(taxonomy_file):
+    """
+    Load technology colors from taxonomy file
+
+    Returns:
+        Dict mapping node kinds to colors
+    """
+    taxonomy = Taxonomy(taxonomy_file)
+    return taxonomy.get_all_colors()
 
 def main():
     parser = argparse.ArgumentParser(
@@ -58,11 +69,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Register icons with default settings
+  # Register icons from taxonomy
   python custom_icons.py --token YOUR_TOKEN
 
-  # Use custom mappings file
-  python custom_icons.py --token YOUR_TOKEN -m custom_mappings.json
+  # Use minimal taxonomy
+  python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy_minimal.json
 
   # Use custom BloodHound URL
   python custom_icons.py --token YOUR_TOKEN --url http://bloodhound.local:8080/api/v2/custom-nodes
@@ -82,10 +93,10 @@ Examples:
     )
 
     parser.add_argument(
-        '-m', '--mappings',
-        default=DEFAULT_MAPPINGS_FILE,
+        '--taxonomy',
+        default=DEFAULT_TAXONOMY_FILE,
         type=Path,
-        help=f'Path to mappings JSON file (default: {DEFAULT_MAPPINGS_FILE})'
+        help=f'Path to taxonomy JSON file (default: {DEFAULT_TAXONOMY_FILE})'
     )
 
     args = parser.parse_args()
@@ -95,31 +106,25 @@ Examples:
         "Content-Type": "application/json"
     }
 
-    # Load mappings
-    print(f"Loading mappings from {args.mappings}")
-    config = load_mappings(args.mappings)
+    # Load taxonomy colors
+    print(f"Loading taxonomy from {args.taxonomy}")
+    node_colors = load_taxonomy_colors(args.taxonomy)
 
-    default_color = config.get('default_color', '#ffc800')
-    mappings = config.get('mappings', [])
+    print(f"Found {len(node_colors)} node kinds to register\n")
 
-    print(f"Found {len(mappings)} custom mappings\n")
-
-    # Register the default Secret icon
+    # Register the default Secret icon (yellow)
+    default_color = "#ffc800"
     print("Registering default Secret icon...")
     define_icon(args.url, headers, "Secret", "key", default_color)
 
-    # Register icons for each mapped node kind
+    # Register icons for each node kind from taxonomy
     success_count = 0
-    for mapping in mappings:
-        node_kind = mapping.get('node_kind')
-        color = mapping.get('color', default_color)
+    for node_kind, color in sorted(node_colors.items()):
+        print(f"Registering {node_kind} icon...")
+        if define_icon(args.url, headers, node_kind, "key", color):
+            success_count += 1
 
-        if node_kind:
-            print(f"Registering {node_kind} icon...")
-            if define_icon(args.url, headers, node_kind, "key", color):
-                success_count += 1
-
-    print(f"\nSuccessfully registered {success_count + 1} icons (1 default + {success_count} custom)")
+    print(f"\nSuccessfully registered {success_count + 1} icons (1 default + {success_count} from taxonomy)")
 
 if __name__ == '__main__':
     main()
