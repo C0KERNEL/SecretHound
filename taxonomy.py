@@ -138,10 +138,14 @@ class Taxonomy:
         Get mapping of node kinds to colors for icon registration
 
         Returns:
-            Dict mapping node kind (e.g., 'AWSSecret') to color hex code
+            Dict mapping node kind to color hex code.
+            Only returns secret_kind (not base_kind) since nodes use the
+            most specific kind for icon display.
         """
         colors = {}
         for tech in self.technologies.values():
+            # Only add secret_kind since that's what will be used for icons
+            # When a node has kinds ["AWSSecret", "AWSBase"], BloodHound uses
+            # the first (most specific) kind for icon selection
             colors[tech.secret_kind] = tech.color
-            colors[tech.base_kind] = tech.color
         return colors

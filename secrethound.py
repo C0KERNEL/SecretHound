@@ -86,7 +86,7 @@ class SecretsParser(ABC):
         """Get default secret type to node kind mappings (empty unless custom mappings provided via -c)"""
         return []
     
-    def get_node_kind_for_secret(self, secret_type: str) -> str:
+    def get_node_kind_for_secret(self, secret_type: str) -> tuple[str, Optional[str]]:
         """
         Determine the appropriate BloodHound node kind for a secret type
 
@@ -94,25 +94,29 @@ class SecretsParser(ABC):
             secret_type: The type of secret discovered (rule ID or type name)
 
         Returns:
-            BloodHound node kind string (e.g., 'AWSSecret', 'Secret')
+            Tuple of (secret_kind, base_kind) or (secret_kind, None)
         """
         import re
 
         # First, try taxonomy lookup by rule ID (preferred method)
         if self.taxonomy and self.scanner_name:
-            kinds = self.taxonomy.lookup_by_rule_id(self.scanner_name, secret_type)
-            if kinds:
-                # Return the secret_kind (e.g., 'AWSSecret')
-                # The graph builder will automatically add the base_kind too
-                return kinds[0]  # kinds is (secret_kind, base_kind)
+            result = self.taxonomy.lookup_by_rule_id(self.scanner_name, secret_type)
+            if result:
+                # Return both secret_kind and base_kind
+                return result  # Returns (secret_kind, base_kind) tuple
 
         # Fallback to legacy custom mappings (only applies when -c flag is used)
         for mapping in self.custom_mappings:
             if re.search(mapping.pattern, secret_type, re.IGNORECASE):
-                return mapping.node_kind
+                # Legacy mappings return base_kind, so we need to construct the secret_kind
+                base_kind = mapping.node_kind
+                if base_kind.endswith("Base"):
+                    secret_kind = base_kind.replace("Base", "Secret")
+                    return (secret_kind, base_kind)
+                return (mapping.node_kind, None)
 
         # Default to Secret if no match
-        return "Secret"
+        return ("Secret", None)
     
     def redact_value(self, value: str) -> str:
         """Redact a secret value while keeping some context"""
@@ -252,12 +256,14 @@ class BloodHoundGraphBuilder:
             finding: SecretFinding object
             parser: SecretsParser instance for mapping logic
         """
-        # Generate secret node ID
+        # Generate secret node ID - always include the actual secret value for uniqueness
+        # even when redacting, so each unique secret gets its own node
         secret_id = parser.generate_node_id(
             finding.secret_type,
-            finding.secret_value if not parser.redact_secrets else "redacted",
+            finding.secret_value,  # Always use actual value for ID generation
             finding.repository or "",
-            finding.file_path or ""
+            finding.file_path or "",
+            str(finding.line_number) if finding.line_number else ""
         )
 
         # Create secret node if it doesn't exist
@@ -293,20 +299,16 @@ class BloodHoundGraphBuilder:
             else:
                 props_dict['secret_value_redacted'] = parser.redact_value(finding.secret_value)
 
-            # Determine node kind based on mappings (if -c flag was used)
-            node_kind = parser.get_node_kind_for_secret(finding.secret_type)
+            # Determine node kind based on mappings
+            secret_kind, base_kind = parser.get_node_kind_for_secret(finding.secret_type)
 
-            # Build kinds list based on whether secret is mapped
-            if node_kind == "Secret":
-                # Unmapped secrets just get the generic "Secret" kind
-                kinds = ["Secret"]
-            elif node_kind.endswith("Secret"):
-                # Mapped *Secret kinds get both the specific kind and the corresponding *Base kind
-                base_kind = node_kind.replace("Secret", "Base")
-                kinds = [node_kind, base_kind]
+            # Build kinds list based on taxonomy result
+            if base_kind:
+                # Mapped secrets get both the specific kind and the corresponding base kind
+                kinds = [secret_kind, base_kind]
             else:
-                # For any other mapped kinds, just use that kind
-                kinds = [node_kind]
+                # Unmapped secrets or secrets without base kinds just get their kind
+                kinds = [secret_kind]
 
             # Create secret node
             secret_node = Node(
@@ -317,7 +319,7 @@ class BloodHoundGraphBuilder:
 
             self.graph.add_node(secret_node)
             self.created_nodes.add(secret_id)
-            logger.debug(f"Created secret node: {secret_id}")
+            logger.debug(f"Created secret node: {secret_id} with kinds: {kinds}")
 
         # Create repository node and edge if repository information exists
         if finding.repository:

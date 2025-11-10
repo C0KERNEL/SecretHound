@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
 """
 Custom Icons for SecretHound
-
 This script registers custom node icons in BloodHound Community Edition
 for secret types based on the technology taxonomy.
 """
-
 import requests
 import json
 import urllib3
@@ -24,39 +22,28 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 DEFAULT_URL = "http://127.0.0.1:8080/api/v2/custom-nodes"
 DEFAULT_TAXONOMY_FILE = "taxonomy.json"
 
-def define_icon(url, headers, icon_type, icon_name, icon_color):
-    """Define a custom icon in BloodHound"""
-    payload = {
-        "custom_types": {
-            icon_type: {
-                "icon": {
-                    "type": "font-awesome",
-                    "name": icon_name,
-                    "color": icon_color
-                }
-            }
-        }
-    }
-
+def define_icons(url, headers, icon_definitions):
+    """Define all custom icons in BloodHound with a single request"""
+    payload = {"custom_types": icon_definitions}
+    
     response = requests.post(
         url,
         headers=headers,
         json=payload,
         verify=False  # Disables SSL verification
     )
-
-    print(f"Sent icon for: {icon_type} (color: {icon_color})")
+    
+    print(f"Sent {len(icon_definitions)} icons in single request")
     print("Status Code:", response.status_code)
     if response.status_code != 200:
         print("Response Body:", response.text)
     print("---")
-
+    
     return response.status_code == 200
 
 def load_taxonomy_colors(taxonomy_file):
     """
     Load technology colors from taxonomy file
-
     Returns:
         Dict mapping node kinds to colors
     """
@@ -71,60 +58,75 @@ def main():
 Examples:
   # Register icons from taxonomy
   python custom_icons.py --token YOUR_TOKEN
-
+  
   # Use minimal taxonomy
   python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy_minimal.json
-
+  
   # Use custom BloodHound URL
   python custom_icons.py --token YOUR_TOKEN --url http://bloodhound.local:8080/api/v2/custom-nodes
         """
     )
-
+    
     parser.add_argument(
         '--token',
         required=True,
         help='BloodHound API token'
     )
-
+    
     parser.add_argument(
         '--url',
         default=DEFAULT_URL,
         help=f'BloodHound API URL (default: {DEFAULT_URL})'
     )
-
+    
     parser.add_argument(
         '--taxonomy',
         default=DEFAULT_TAXONOMY_FILE,
         type=Path,
         help=f'Path to taxonomy JSON file (default: {DEFAULT_TAXONOMY_FILE})'
     )
-
+    
     args = parser.parse_args()
-
+    
     headers = {
         "Authorization": f"Bearer {args.token}",
         "Content-Type": "application/json"
     }
-
+    
     # Load taxonomy colors
     print(f"Loading taxonomy from {args.taxonomy}")
     node_colors = load_taxonomy_colors(args.taxonomy)
-
     print(f"Found {len(node_colors)} node kinds to register\n")
-
-    # Register the default Secret icon (yellow)
+    
+    # Build icon definitions dictionary
+    icon_definitions = {}
+    
+    # Add default Secret icon (yellow)
     default_color = "#ffc800"
-    print("Registering default Secret icon...")
-    define_icon(args.url, headers, "Secret", "key", default_color)
-
-    # Register icons for each node kind from taxonomy
-    success_count = 0
+    icon_definitions["Secret"] = {
+        "icon": {
+            "type": "font-awesome",
+            "name": "key",
+            "color": default_color
+        }
+    }
+    
+    # Add icons for each node kind from taxonomy
     for node_kind, color in sorted(node_colors.items()):
-        print(f"Registering {node_kind} icon...")
-        if define_icon(args.url, headers, node_kind, "key", color):
-            success_count += 1
-
-    print(f"\nSuccessfully registered {success_count + 1} icons (1 default + {success_count} from taxonomy)")
+        icon_definitions[node_kind] = {
+            "icon": {
+                "type": "font-awesome",
+                "name": "key",
+                "color": color
+            }
+        }
+    
+    # Register all icons in one request
+    print(f"Registering {len(icon_definitions)} icons (1 default + {len(node_colors)} from taxonomy)...")
+    if define_icons(args.url, headers, icon_definitions):
+        print(f"\nSuccessfully registered all {len(icon_definitions)} icons")
+    else:
+        print("\nFailed to register icons")
 
 if __name__ == '__main__':
     main()

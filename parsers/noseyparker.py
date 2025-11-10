@@ -47,6 +47,12 @@ class NoseyParkerParser(SecretsParser):
 
         # NoseyParker format has a 'matches' array
         matches = data.get('matches', [])
+        
+        # Use rule_text_id for taxonomy lookup (e.g., "np.aws.2")
+        # This is the key used in the taxonomy scanner_mappings
+        rule_text_id = data.get('rule_text_id', '')
+        
+        # rule_name is the human-readable name (e.g., "AWS Secret Access Key")
         rule_name = data.get('rule_name', 'Unknown')
 
         for match in matches:
@@ -65,7 +71,7 @@ class NoseyParkerParser(SecretsParser):
                     blob_path = first_commit.get('blob_path', '')
 
                     finding = SecretFinding(
-                        secret_type=rule_name,
+                        secret_type=rule_text_id,  # Use rule_text_id for taxonomy lookup
                         secret_value=secret_value,
                         file_path=blob_path,
                         repository=repo_path,
@@ -73,8 +79,8 @@ class NoseyParkerParser(SecretsParser):
                         author=commit_metadata.get('author_email'),
                         metadata={
                             'source': 'noseyparker',
-                            'rule': rule_name,
-                            'rule_text_id': data.get('rule_text_id', ''),
+                            'rule': rule_name,  # Store human-readable name in metadata
+                            'rule_text_id': rule_text_id,
                             'finding_id': data.get('finding_id', ''),
                             'committer_name': commit_metadata.get('committer_name'),
                             'committer_email': commit_metadata.get('committer_email'),
@@ -85,17 +91,16 @@ class NoseyParkerParser(SecretsParser):
                 elif prov.get('kind') == 'filesystem':
                     file_path = prov.get('path', '')
                     finding = SecretFinding(
-                        secret_type=rule_name,
+                        secret_type=rule_text_id,  # Use rule_text_id for taxonomy lookup
                         secret_value=secret_value,
                         file_path=file_path,
                         metadata={
                             'source': 'noseyparker',
-                            'rule': rule_name,
-                            'rule_text_id': data.get('rule_text_id', ''),
+                            'rule': rule_name,  # Store human-readable name in metadata
+                            'rule_text_id': rule_text_id,
                             'finding_id': data.get('finding_id', ''),
                         }
                     )
                     findings.append(finding)
 
         return findings
-
