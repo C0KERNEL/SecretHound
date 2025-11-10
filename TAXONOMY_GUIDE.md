@@ -98,6 +98,26 @@ TruffleHog has 700+ detectors, with 200+ mapped to technologies:
 - **Monitoring**: `Grafana`, `GrafanaServiceAccount`, `NewRelicPersonalApiKey`, `Dynatrace`, `Datadog`, `Loggly`, `LogzIO`
 - **And 150+ more...**
 
+### Nemesis
+
+Nemesis uses NoseyParker's detection rules (150+ rules), with all rules mapped using their full names. Since Nemesis outputs NoseyParker rule names, the mappings use the full rule name format:
+
+- **AWS**: `AWS Secret Access Key`, `AWS Session Token`, `Amazon MWS Auth Token`, `Amazon API Credentials`, `AWS AppSync API Key`
+- **Azure**: `Azure Connection String`, `Azure App Configuration Connection String`, `Azure Personal Access Token`, `Azure DevOps Personal Access Token`, `Microsoft Teams Webhook`
+- **GCP**: `Google OAuth Client Secret`, `Google OAuth Access Token`, `Google API Key`, `Google OAuth Credentials`
+- **GitHub**: `GitHub Personal Access Token`, `GitHub Personal Access Token (fine-grained permissions)`, `GitHub OAuth Access Token`, `GitHub App Token`, `GitHub Refresh Token`, `GitHub Secret Key`
+- **GitLab**: `GitLab Runner Registration Token`, `GitLab Personal Access Token`, `GitLab Pipeline Trigger Token`
+- **Kubernetes**: `Kubernetes Bootstrap Token`
+- **Docker**: `Docker Hub Personal Access Token`
+- **Package Registries**: `NPM Access Token (fine-grained)`, `PyPI Upload Token`, `RubyGems API Key`, `NuGet API Key`, `crates.io API Key`
+- **AI Platforms**: `OpenAI API Key`, `Anthropic API Key`, `HuggingFace User Access Token`, `Groq API Key`
+- **Payment**: `Stripe API Key`, `Stripe API Test Key`, `Square Access Token`, `Square OAuth Secret`, `Shopify App Secret`, `Shopify Access Token (Public App)`, `Shopify Access Token (Custom App)`, `Shopify Access Token (Legacy Private App)`
+- **Communication**: `Slack Bot Token`, `Slack Webhook`, `Slack User Token`, `Slack App Token`, `Slack Legacy Bot Token`, `Telegram Bot Token`
+- **Monitoring**: `New Relic License Key`, `New Relic API Service Key`, `New Relic Admin API Key`, `Grafana API Token`, `Grafana Cloud API Token`, `Grafana Service Account Token`
+- **And 140+ more...**
+
+Note: Nemesis findings include additional context such as triage status (true_positive/false_positive), severity scores, and project information.
+
 See `taxonomy.json` for complete mappings.
 
 ## Registering Icons in BloodHound
@@ -171,7 +191,7 @@ Edit `taxonomy.json`:
 
 ### Adding Support for Another Scanner
 
-GitHub and Nemesis scanners can follow the same pattern:
+Additional scanners can follow the same pattern. For example, GitHub alerts could be added:
 
 ```json
 {
@@ -179,13 +199,12 @@ GitHub and Nemesis scanners can follow the same pattern:
     "github": {
       "aws_access_key_id": "aws",
       "azure_storage_key": "azure"
-    },
-    "nemesis": {
-      "AWS_KEY": "aws"
     }
   }
 }
 ```
+
+Note: Nemesis scanner support has been added and uses NoseyParker rule names (e.g., "GitHub Personal Access Token" instead of rule IDs).
 
 ## Migration from Legacy Mappings
 

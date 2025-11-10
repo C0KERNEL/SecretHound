@@ -1,0 +1,664 @@
+{
+    "graph": {
+        "nodes": [
+            {
+                "id": "ffd179b102fe81478fe20b82799b11f31b696dc172e2bf0bae794a707c6aecad",
+                "kinds": [
+                    "GHSecret",
+                    "GHBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "ffd179b102fe81478fe20b82799b11f31b696dc172e2bf0bae794a707c6aecad",
+                    "name": "GitHub Personal Access Token_ffd179b1",
+                    "displayname": "GitHub Personal Access Token",
+                    "secret_type": "GitHub Personal Access Token",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 113,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "1",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "749",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "ghp_...8B4a"
+                }
+            },
+            {
+                "id": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                "kinds": [
+                    "GHBase",
+                    "GHRepository",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "name": "leaktk/fake-leaks",
+                    "displayname": "leaktk/fake-leaks",
+                    "repository_path": "https://github.com/leaktk/fake-leaks"
+                }
+            },
+            {
+                "id": "c7869cc806528d698471c13f01ff1757299588cea4472cd90d15e6a877ecd23e",
+                "kinds": [
+                    "GHSecret",
+                    "GHBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "c7869cc806528d698471c13f01ff1757299588cea4472cd90d15e6a877ecd23e",
+                    "name": "GitHub OAuth Access Token_c7869cc8",
+                    "displayname": "GitHub OAuth Access Token",
+                    "secret_type": "GitHub OAuth Access Token",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 114,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "15",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "749",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "gho_...8B4a"
+                }
+            },
+            {
+                "id": "e74a401d0e9c39c620a400f0d1f31506fc55ec73b6cf327191211e5475ae63ed",
+                "kinds": [
+                    "GHSecret",
+                    "GHBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "e74a401d0e9c39c620a400f0d1f31506fc55ec73b6cf327191211e5475ae63ed",
+                    "name": "GitHub App Token_e74a401d",
+                    "displayname": "GitHub App Token",
+                    "secret_type": "GitHub App Token",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 116,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "17",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "749",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "ghs_...8B4a"
+                }
+            },
+            {
+                "id": "81df28d50b88314e6962d05427338efc00da99821c35f2a1a5f8a372037913d9",
+                "kinds": [
+                    "GHSecret",
+                    "GHBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "81df28d50b88314e6962d05427338efc00da99821c35f2a1a5f8a372037913d9",
+                    "name": "GitHub Personal Access Token (fine-grained permissions)_81df28d5",
+                    "displayname": "GitHub Personal Access Token (fine-grained permissions)",
+                    "secret_type": "GitHub Personal Access Token (fine-grained permissions)",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 112,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "21",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "749",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "gith...FRqa"
+                }
+            },
+            {
+                "id": "fa35b65fbbc0b60bf98e4d0660a537f6dc84b47451d950b0c27b77ecefd69967",
+                "kinds": [
+                    "GitLabSecret",
+                    "GitLabBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "fa35b65fbbc0b60bf98e4d0660a537f6dc84b47451d950b0c27b77ecefd69967",
+                    "name": "GitLab Personal Access Token_fa35b65f",
+                    "displayname": "GitLab Personal Access Token",
+                    "secret_type": "GitLab Personal Access Token",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 123,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "23",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "830",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "glpa...sPUX"
+                }
+            },
+            {
+                "id": "f44062b9049cbc044afa1ecf9e2b04167ecc8ace32d9c842ae639d0fe13524ac",
+                "kinds": [
+                    "GCPSecret",
+                    "GCPBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "f44062b9049cbc044afa1ecf9e2b04167ecc8ace32d9c842ae639d0fe13524ac",
+                    "name": "Google OAuth Access Token_f44062b9",
+                    "displayname": "Google OAuth Access Token",
+                    "secret_type": "Google OAuth Access Token",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 22,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "24",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "899",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "ya29...bIZ\""
+                }
+            },
+            {
+                "id": "7fc70c3b0fba6a8dea1c35de7bd74b951bbd52d890d07f19d34a050472dfe7ee",
+                "kinds": [
+                    "GroqSecret",
+                    "GroqBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "7fc70c3b0fba6a8dea1c35de7bd74b951bbd52d890d07f19d34a050472dfe7ee",
+                    "name": "Groq API Key_7fc70c3b",
+                    "displayname": "Groq API Key",
+                    "secret_type": "Groq API Key",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 25,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "25",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "796",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "gsk_...J6OW"
+                }
+            },
+            {
+                "id": "54eefd991a07b5aa206cd004f0445fb54cf857fbb9e659decab4e61e085277cd",
+                "kinds": [
+                    "HuggingFaceSecret",
+                    "HuggingFaceBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "54eefd991a07b5aa206cd004f0445fb54cf857fbb9e659decab4e61e085277cd",
+                    "name": "HuggingFace User Access Token_54eefd99",
+                    "displayname": "HuggingFace User Access Token",
+                    "secret_type": "HuggingFace User Access Token",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 27,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "26",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "889",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "hf_H...cJmC"
+                }
+            },
+            {
+                "id": "7a7efb95d7a56422a0bb14d139fa596a7cd4cb021fad13a84c5ed8ebb7554fbe",
+                "kinds": [
+                    "MailChimpSecret",
+                    "MailChimpBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "7a7efb95d7a56422a0bb14d139fa596a7cd4cb021fad13a84c5ed8ebb7554fbe",
+                    "name": "MailChimp API Key_7a7efb95",
+                    "displayname": "MailChimp API Key",
+                    "secret_type": "MailChimp API Key",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 86,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "27",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "856",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "mCac...-us1"
+                }
+            },
+            {
+                "id": "961f7a303610cedd7cd5750cb54e99dd48d9d75681c7ff259f7a90a02ecf60e8",
+                "kinds": [
+                    "NPMSecret",
+                    "NPMBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "961f7a303610cedd7cd5750cb54e99dd48d9d75681c7ff259f7a90a02ecf60e8",
+                    "name": "NPM Access Token (fine-grained)_961f7a30",
+                    "displayname": "NPM Access Token (fine-grained)",
+                    "secret_type": "NPM Access Token (fine-grained)",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 110,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "30",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "673",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "npm_...LDcl"
+                }
+            },
+            {
+                "id": "8607a36a2a5f740dde4723ded6863791ac5b7247febadd4dd87614ff7152f6b2",
+                "kinds": [
+                    "Secret",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "8607a36a2a5f740dde4723ded6863791ac5b7247febadd4dd87614ff7152f6b2",
+                    "name": "PEM-Encoded Private Key_8607a36a",
+                    "displayname": "PEM-Encoded Private Key",
+                    "secret_type": "PEM-Encoded Private Key",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 131,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "35",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "897",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "----...----"
+                }
+            },
+            {
+                "id": "352ff28447e49665e2a1d39e5502193975889302f4743314423c4f1d9cdb1997",
+                "kinds": [
+                    "PyPISecret",
+                    "PyPIBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "352ff28447e49665e2a1d39e5502193975889302f4743314423c4f1d9cdb1997",
+                    "name": "PyPI Upload Token_352ff284",
+                    "displayname": "PyPI Upload Token",
+                    "secret_type": "PyPI Upload Token",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 117,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "61",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "712",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "pypi...ZGc\""
+                }
+            },
+            {
+                "id": "7291ad9d0cd9f0a3ad9b083299995791c821566f2c604a41fe68569f5a96b438",
+                "kinds": [
+                    "SendGridSecret",
+                    "SendGridBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "7291ad9d0cd9f0a3ad9b083299995791c821566f2c604a41fe68569f5a96b438",
+                    "name": "SendGrid API Key_7291ad9d",
+                    "displayname": "SendGrid API Key",
+                    "secret_type": "SendGrid API Key",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 78,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "62",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "944",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "SG.n...s5cr"
+                }
+            },
+            {
+                "id": "c136950bace58862bcbefdb1eeded29e3ca919ebe1f9fa894a5ed07fbb1d328e",
+                "kinds": [
+                    "SlackSecret",
+                    "SlackBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "c136950bace58862bcbefdb1eeded29e3ca919ebe1f9fa894a5ed07fbb1d328e",
+                    "name": "Slack Webhook_c136950b",
+                    "displayname": "Slack Webhook",
+                    "secret_type": "Slack Webhook",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 76,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "70",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "919",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "http...90zy"
+                }
+            },
+            {
+                "id": "d57f0d6e68dd737662125b280be0981daf1c2ffcbe29600c3d3256e719d0bd9f",
+                "kinds": [
+                    "SourcegraphSecret",
+                    "SourcegraphBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "d57f0d6e68dd737662125b280be0981daf1c2ffcbe29600c3d3256e719d0bd9f",
+                    "name": "Sourcegraph Access Token_d57f0d6e",
+                    "displayname": "Sourcegraph Access Token",
+                    "secret_type": "Sourcegraph Access Token",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 12,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "72",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "852",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "sgp_...a4c0"
+                }
+            },
+            {
+                "id": "fdcc91fd2910a8d20f182af077d4d6baad54c15d718f9b20aa8f57f2af4f6eca",
+                "kinds": [
+                    "StripeSecret",
+                    "StripeBase",
+                    "StargateNetwork"
+                ],
+                "properties": {
+                    "objectid": "fdcc91fd2910a8d20f182af077d4d6baad54c15d718f9b20aa8f57f2af4f6eca",
+                    "name": "Stripe API Key_fdcc91fd",
+                    "displayname": "Stripe API Key",
+                    "secret_type": "Stripe API Key",
+                    "file_path": "leaktk/fake-leaks/trufflhog_test.json",
+                    "repository": "https://github.com/leaktk/fake-leaks",
+                    "line_number": 92,
+                    "source": "nemesis",
+                    "origin_name": "noseyparker",
+                    "finding_id": "73",
+                    "category": "credential",
+                    "severity": "7",
+                    "rule_type": "secret",
+                    "column": "952",
+                    "project": "ASSESS-123",
+                    "agent_id": "jd",
+                    "git_commit": "None",
+                    "triage_status": "true_positive",
+                    "secret_value_redacted": "rk_l...WhEz"
+                }
+            }
+        ],
+        "edges": [
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "ffd179b102fe81478fe20b82799b11f31b696dc172e2bf0bae794a707c6aecad",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "c7869cc806528d698471c13f01ff1757299588cea4472cd90d15e6a877ecd23e",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "e74a401d0e9c39c620a400f0d1f31506fc55ec73b6cf327191211e5475ae63ed",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "81df28d50b88314e6962d05427338efc00da99821c35f2a1a5f8a372037913d9",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "fa35b65fbbc0b60bf98e4d0660a537f6dc84b47451d950b0c27b77ecefd69967",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "f44062b9049cbc044afa1ecf9e2b04167ecc8ace32d9c842ae639d0fe13524ac",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "7fc70c3b0fba6a8dea1c35de7bd74b951bbd52d890d07f19d34a050472dfe7ee",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "54eefd991a07b5aa206cd004f0445fb54cf857fbb9e659decab4e61e085277cd",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "7a7efb95d7a56422a0bb14d139fa596a7cd4cb021fad13a84c5ed8ebb7554fbe",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "961f7a303610cedd7cd5750cb54e99dd48d9d75681c7ff259f7a90a02ecf60e8",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "8607a36a2a5f740dde4723ded6863791ac5b7247febadd4dd87614ff7152f6b2",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "352ff28447e49665e2a1d39e5502193975889302f4743314423c4f1d9cdb1997",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "7291ad9d0cd9f0a3ad9b083299995791c821566f2c604a41fe68569f5a96b438",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "c136950bace58862bcbefdb1eeded29e3ca919ebe1f9fa894a5ed07fbb1d328e",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "d57f0d6e68dd737662125b280be0981daf1c2ffcbe29600c3d3256e719d0bd9f",
+                    "match_by": "id"
+                }
+            },
+            {
+                "kind": "ContainsCredentialsFor",
+                "start": {
+                    "value": "8efac212433f6308a0e45e5a5b1c32a1157d4f52e76baee405db899a8f39809d",
+                    "match_by": "id"
+                },
+                "end": {
+                    "value": "fdcc91fd2910a8d20f182af077d4d6baad54c15d718f9b20aa8f57f2af4f6eca",
+                    "match_by": "id"
+                }
+            }
+        ]
+    },
+    "metadata": {
+        "source_kind": "StargateNetwork"
+    }
+}
