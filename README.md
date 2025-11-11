@@ -22,6 +22,65 @@ SecretHound converts secret scanning results from various sources into BloodHoun
 - **Centralized Taxonomy System** - 70+ technologies with scanner-specific rule ID mapping
   - Covers 200+ TruffleHog detectors and all NoseyParker rules
   - Choose between comprehensive or minimal taxonomy
+  - Sample of technologies supported by the taxonomy system:
+
+```mermaid
+mindmap
+  root((SecretHound<br/>Taxonomy))
+    Cloud Providers
+      AWS
+        AWSSecret
+        AWSAccessToken
+        AWSS3
+        AWSSessionToken
+      Azure
+        AzureSecret
+        AzureToken
+        AzureConnectionString
+      GCP
+        GCPSecret
+        GCPToken
+        GCPAPIKey
+    Version Control
+      GitHub
+        GHPAT
+        GHApp
+        GHOAuth
+        GHFineGrained
+      GitLab
+        GitLabPAT
+        GitLabRunner
+    Communication
+      Slack
+        SlackWebhook
+        SlackToken
+        SlackBot
+      Discord
+        DiscordWebhook
+        DiscordBot
+      Telegram
+        TelegramBot
+    Payment
+      Stripe
+        StripeKey
+        StripeWebhook
+      PayPal
+        PayPalClient
+    Databases
+      MongoDB
+        MongoDBURI
+      PostgreSQL
+        PostgreSQLURI
+      MySQL
+        MySQLURI
+    API Services
+      Twilio
+        TwilioAPIKey
+      SendGrid
+        SendGridAPIKey
+      OpenAI
+        OpenAIKey
+```
 
 - **Dual Node Kind System** - Query secrets by specific type or technology category
   - Example: `AWSSecret` (specific) + `AWSBase` (all AWS secrets)

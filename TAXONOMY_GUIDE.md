@@ -22,7 +22,6 @@ SecretHound now includes a centralized technology taxonomy system that maps scan
 
 3. **Fallback Behavior**:
    - If no taxonomy mapping exists, the secret gets only the `Secret` kind
-   - Legacy custom mappings (via `-c` flag) are still supported for backwards compatibility
 
 ## Taxonomy Files
 
@@ -49,12 +48,6 @@ python secrethound.py -t noseyparker -i report.json -o output.json
 
 ```bash
 python secrethound.py -t noseyparker -i report.json -o output.json --taxonomy taxonomy_minimal.json
-```
-
-### Disable Taxonomy (Fall back to legacy behavior)
-
-```bash
-python secrethound.py -t noseyparker -i report.json -o output.json --taxonomy /nonexistent/file.json
 ```
 
 ## Scanner Rule ID Mappings
@@ -100,7 +93,7 @@ TruffleHog has 700+ detectors, with 200+ mapped to technologies:
 
 ### Nemesis
 
-Nemesis uses NoseyParker's detection rules (150+ rules), with all rules mapped using their full names. Since Nemesis outputs NoseyParker rule names, the mappings use the full rule name format:
+Nemesis uses NoseyParker's detection rules and some custom rules (150+ rules), with all rules mapped using their full names. Since Nemesis outputs NoseyParker rule names, the mappings use the full rule name format:
 
 - **AWS**: `AWS Secret Access Key`, `AWS Session Token`, `Amazon MWS Auth Token`, `Amazon API Credentials`, `AWS AppSync API Key`
 - **Azure**: `Azure Connection String`, `Azure App Configuration Connection String`, `Azure Personal Access Token`, `Azure DevOps Personal Access Token`, `Microsoft Teams Webhook`
@@ -189,54 +182,9 @@ Edit `taxonomy.json`:
 }
 ```
 
-### Adding Support for Another Scanner
-
-Additional scanners can follow the same pattern. For example, GitHub alerts could be added:
-
-```json
-{
-  "scanner_mappings": {
-    "github": {
-      "aws_access_key_id": "aws",
-      "azure_storage_key": "azure"
-    }
-  }
-}
-```
-
-Note: Nemesis scanner support has been added and uses NoseyParker rule names (e.g., "GitHub Personal Access Token" instead of rule IDs).
-
-## Migration from Legacy Mappings
-
-If you were using custom mappings via the `-c` flag:
-
-**Old Way** (example_mappings.json):
-```json
-{
-  "mappings": [
-    {"pattern": "AWS", "node_kind": "AWSSecret", "color": "#FF9900"}
-  ]
-}
-```
-
-**New Way**: Built into `taxonomy.json` - no `-c` flag needed!
-
-The taxonomy system provides:
-- More accurate mapping (by exact rule ID instead of regex)
-- Automatic `*Base` kind assignment
-- Centralized configuration for all scanners
-- Better maintainability
-
 ## Files Created
 
 - **taxonomy.py**: Core taxonomy module
 - **taxonomy.json**: Comprehensive taxonomy (70+ technologies)
 - **taxonomy_minimal.json**: Minimal taxonomy (~25 technologies)
 - **TAXONOMY_GUIDE.md**: This documentation
-
-## Backward Compatibility
-
-- Legacy `-c` custom mappings still work
-- Taxonomy lookup happens first, then falls back to custom mappings
-- If no taxonomy file exists, tool continues with warnings
-- All existing parsers and functionality remain intact
