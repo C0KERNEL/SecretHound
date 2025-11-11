@@ -1,10 +1,8 @@
-# SecretHound
+# SecretHound - A BloodHound OpenGraph Extension for Secrets
 
 <p align="center">
   <img src="assets/logo.png" alt="SecretHound Logo" width="400"/>
 </p>
-
-> **BloodHound OpenGraph Extension for Secrets**
 
 SecretHound converts secret scanning results from various sources into BloodHound OpenGraph format for attack path visualization and analysis. Built on @p0dalirius's bhopengraph library.
 
