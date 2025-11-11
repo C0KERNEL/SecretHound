@@ -57,7 +57,10 @@ class GitHubSecretScannerParser(SecretsParser):
 
         # Extract alert metadata
         alert_number = data.get('number')
-        secret_type = data.get('secret_type_display_name') or data.get('secret_type', 'Unknown')
+        # Use secret_type (machine-readable) for taxonomy lookup (e.g., "adafruit_io_key")
+        secret_type = data.get('secret_type', 'unknown')
+        # secret_type_display_name is human-readable (e.g., "Adafruit IO Key")
+        secret_type_display_name = data.get('secret_type_display_name', '')
         secret_value = data.get('secret', '')
         state = data.get('state', 'unknown')
         created_at = data.get('created_at')
@@ -79,6 +82,8 @@ class GitHubSecretScannerParser(SecretsParser):
         # Build metadata
         metadata = {
             'source': 'github_secret_scanner',
+            'secret_type': secret_type,  # Store machine-readable type
+            'secret_type_display_name': secret_type_display_name,  # Store human-readable name
             'alert_number': alert_number,
             'state': state,
             'created_at': created_at,
