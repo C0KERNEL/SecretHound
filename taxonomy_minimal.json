@@ -23,7 +23,7 @@
     "github": {
       "base_kind": "GHBase",
       "secret_kind": "GHSecret",
-      "color": "#181717",
+      "color": "#2DBA4E",
       "display_name": "GitHub"
     },
     "gitlab": {
