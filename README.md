@@ -6,11 +6,13 @@
 
 SecretHound converts secret scanning results from various sources into BloodHound OpenGraph format for attack path visualization and analysis. Built on @p0dalirius's bhopengraph library.
 
+Version: 1.0
+
 **Supported Scanners:**
 - GitHub Secret Scanning
 - NoseyParker
 - TruffleHog
-- Nemesis (work in progress)
+- Nemesis
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![BloodHound](https://img.shields.io/badge/BloodHound-OpenGraph-red.svg)](https://bloodhound.specterops.io/)
@@ -80,8 +82,8 @@ mindmap
         OpenAIKey
 ```
 
-- **Dual Node Kind System** - Query secrets by specific type or technology category
-  - Example: `AWSSecret` (specific) + `AWSBase` (all AWS secrets)
+- **Dual Node Kind System** - Query secrets by specific type or technology kind
+  - Example: `AWSSecret` (specific kind of secret) + `AWSBase` (all AWS nodes)
   - Enables powerful Cypher queries in BloodHound
 
 - **Multi-Scanner Support** - Unified BloodHound format across different tools
