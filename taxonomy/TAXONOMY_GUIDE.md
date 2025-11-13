@@ -36,6 +36,12 @@ SecretHound now includes a centralized technology taxonomy system that maps scan
 - Ideal for cleaner BloodHound graphs with less noise
 - Includes: AWS, Azure, GCP, GitHub, Kubernetes, Docker, major AI platforms, etc.
 
+### taxonomy_flat.json (No Technology Classification)
+- **All secrets** categorized as generic `Secret` kind only
+- No technology-specific `*Base` or `*Secret` kinds
+- Ideal for simplest possible graph structure
+- Use when you only care about secret discovery, not technology categorization
+
 ## Usage
 
 ### Basic Usage (Uses taxonomy.json by default)
@@ -47,7 +53,13 @@ python secrethound.py -t noseyparker -i report.json -o output.json
 ### Use Minimal Taxonomy
 
 ```bash
-python secrethound.py -t noseyparker -i report.json -o output.json --taxonomy taxonomy_minimal.json
+python secrethound.py -t noseyparker -i report.json -o output.json --taxonomy taxonomy/taxonomy_minimal.json
+```
+
+### Use Flat Taxonomy (No Technology Classification)
+
+```bash
+python secrethound.py -t trufflehog -i report.json -o output.json --taxonomy taxonomy/taxonomy_flat.json
 ```
 
 ## Scanner Rule ID Mappings
@@ -122,7 +134,10 @@ The `custom_icons.py` script now reads from taxonomy files:
 python custom_icons.py --token YOUR_TOKEN
 
 # Register icons from minimal taxonomy only
-python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy_minimal.json
+python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy/taxonomy_minimal.json
+
+# Register icon for flat taxonomy (only generic "Secret" icon)
+python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy/taxonomy_flat.json
 ```
 
 Each technology gets its brand color:
@@ -131,6 +146,7 @@ Each technology gets its brand color:
 - GCP: Light Blue (#4285F4)
 - GitHub: Dark Gray (#181717)
 - Stripe: Purple (#635BFF)
+- Secret (default/flat): Gold (#ffc800)
 - etc.
 
 ## BloodHound Queries
@@ -187,4 +203,5 @@ Edit `taxonomy.json`:
 - **taxonomy.py**: Core taxonomy module
 - **taxonomy.json**: Comprehensive taxonomy (70+ technologies)
 - **taxonomy_minimal.json**: Minimal taxonomy (~25 technologies)
+- **taxonomy_flat.json**: Flat taxonomy (all secrets → "Secret")
 - **TAXONOMY_GUIDE.md**: This documentation

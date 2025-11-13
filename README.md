@@ -79,7 +79,7 @@ python secrethound.py -t {github,noseyparker,trufflehog,nemesis} -i INPUT -o OUT
 SecretHound uses a centralized taxonomy system to automatically categorize secrets by technology with colors. The taxonomy maps scanner-specific rule IDs to BloodHound node types.
 
 ### Built-in Taxonomy Files
-- **taxonomy.json** - Comprehensive taxonomy
+- **taxonomy.json** - Comprehensive taxonomy (default)
   - Covers 200+ TruffleHog detectors
   - All NoseyParker and GitHub Secret Scanning rules mapped
   - Ideal for detailed analysis
@@ -87,6 +87,11 @@ SecretHound uses a centralized taxonomy system to automatically categorize secre
 - **taxonomy_minimal.json** - Minimal taxonomy highlighting ~25 major technologies
   - Focuses on most common cloud providers and services
   - Cleaner BloodHound graphs with less node kinds
+
+- **taxonomy_flat.json** - Flat taxonomy with no technology classification
+  - All secrets categorized as generic "Secret" kind
+  - Simplest graph structure
+  - Ideal for basic secret discovery without technology-specific analysis
 
 See [TAXONOMY_GUIDE.md](taxonomy/TAXONOMY_GUIDE.md) for complete documentation.
 
@@ -98,6 +103,9 @@ python secrethound.py -t trufflehog -i input.jsonl -o output.json
 
 # Use minimal taxonomy for cleaner graphs
 python secrethound.py -t noseyparker -i input.json -o output.json --taxonomy taxonomy/taxonomy_minimal.json
+
+# Use flat taxonomy - all secrets as generic "Secret"
+python secrethound.py -t github -i input.json -o output.json --taxonomy taxonomy/taxonomy_flat.json
 ```
 
 ### Node Kind System
