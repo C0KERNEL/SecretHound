@@ -173,7 +173,10 @@ class BloodHoundGraphBuilder:
         Args:
             source_kind: Source kind for the OpenGraph
         """
-        self.graph = OpenGraph(source_kind=source_kind)
+        # Initialize OpenGraph without source_kind to prevent it from being added to node kinds
+        self.graph = OpenGraph()
+        # Store source_kind separately to set only before export
+        self.source_kind = source_kind
         self.created_nodes: Set[str] = set()
         self.created_repositories: Set[str] = set()
 
@@ -344,6 +347,9 @@ class BloodHoundGraphBuilder:
             output_path: Path to output JSON file
         """
         logger.info(f"Saving BloodHound graph to {output_path}")
+
+        # Set source_kind on graph object right before export (for metadata only)
+        self.graph.source_kind = self.source_kind
 
         # Use export_to_file method from bhopengraph
         self.graph.export_to_file(str(output_path))
