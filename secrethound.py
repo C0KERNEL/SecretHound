@@ -31,7 +31,7 @@ except ImportError:
 try:
     from taxonomy import Taxonomy
 except ImportError:
-    print("Error: taxonomy module not found. Ensure taxonomy.py is in the same directory.")
+    print("Error: taxonomy module not found. Ensure taxonomy package is available.")
     exit(1)
 
 
@@ -459,8 +459,8 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
     parser.add_argument(
         '--taxonomy',
         type=Path,
-        default=Path('taxonomy.json'),
-        help='Technology taxonomy file for mapping rule IDs to node kinds (default: taxonomy.json)'
+        default=Path('taxonomy/taxonomy.json'),
+        help='Technology taxonomy file for mapping rule IDs to node kinds (default: taxonomy/taxonomy.json)'
     )
     
     parser.add_argument(

@@ -13,14 +13,14 @@ from pathlib import Path
 try:
     from taxonomy import Taxonomy
 except ImportError:
-    print("Error: taxonomy module not found. Ensure taxonomy.py is in the same directory.")
+    print("Error: taxonomy module not found. Ensure taxonomy package is available.")
     exit(1)
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Default BloodHound API settings
 DEFAULT_URL = "http://127.0.0.1:8080/api/v2/custom-nodes"
-DEFAULT_TAXONOMY_FILE = "taxonomy.json"
+DEFAULT_TAXONOMY_FILE = "taxonomy/taxonomy.json"
 
 def define_icons(url, headers, icon_definitions):
     """Define all custom icons in BloodHound with a single request"""
@@ -58,10 +58,10 @@ def main():
 Examples:
   # Register icons from taxonomy
   python custom_icons.py --token YOUR_TOKEN
-  
+
   # Use minimal taxonomy
-  python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy_minimal.json
-  
+  python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy/taxonomy_minimal.json
+
   # Use custom BloodHound URL
   python custom_icons.py --token YOUR_TOKEN --url http://bloodhound.local:8080/api/v2/custom-nodes
         """

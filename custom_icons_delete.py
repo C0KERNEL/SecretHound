@@ -17,7 +17,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Default BloodHound API settings
 DEFAULT_BASE_URL = "http://127.0.0.1:8080/api/v2/custom-nodes"
-DEFAULT_TAXONOMY_FILE = "taxonomy.json"
+DEFAULT_TAXONOMY_FILE = "taxonomy/taxonomy.json"
 
 def delete_icon(base_url, headers, icon_type):
     """Delete a custom icon from BloodHound"""
@@ -54,13 +54,13 @@ def main():
 Examples:
   # Delete all icons from taxonomy
   python custom_icons_delete.py --token YOUR_TOKEN --all
-  
+
   # Delete specific icons
   python custom_icons_delete.py --token YOUR_TOKEN --kind Secret AWSAccessKey GitHubToken
-  
+
   # Use custom taxonomy file
-  python custom_icons_delete.py --token YOUR_TOKEN --all --taxonomy taxonomy_minimal.json
-  
+  python custom_icons_delete.py --token YOUR_TOKEN --all --taxonomy taxonomy/taxonomy_minimal.json
+
   # Use custom BloodHound URL
   python custom_icons_delete.py --token YOUR_TOKEN --url http://bloodhound.local:8080/api/v2/custom-nodes --all
         """
