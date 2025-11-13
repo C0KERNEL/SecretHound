@@ -42,7 +42,8 @@ python custom_icons.py --token YOUR_BLOODHOUND_TOKEN
 
 ```bash
 # 1. Scan this repository with NoseyParker
-noseyparker scan --datastore np.db https://github.com/C0KERNEL/SecretHound.git
+git clone https://github.com/C0KERNEL/SecretHound.git
+noseyparker scan --datastore np.db SecretHound
 noseyparker report --datastore np.db --format json > noseyparker_output.json
 
 # 2. Convert to BloodHound format
@@ -176,7 +177,7 @@ python secrethound.py -t github -i github_alerts.json -o og_secrets.json
 ### NoseyParker
 ```bash
 # Scan a repository
-noseyparker scan --datastore np.db https://github.com/example/repo.git
+noseyparker scan --datastore np.db --git-url https://github.com/example/repo.git
 
 # Generate JSON report
 noseyparker report --datastore np.db --format json > noseyparker_output.json
@@ -242,7 +243,7 @@ SecretHound is designed to be compatible with existing BloodHound OpenGraph exte
 - [x] [GCP-Hound](https://github.com/F41zK4r1m/GCP-Hound) - GCP technology subgraph - Adds nodes with `GCPBase` kind
 
 ## Acknowledgments
-- **SpecterOps** - BloodHound, OpenGraph, GitHound, Nemesis
+- **SpecterOps** - BloodHound, OpenGraph, GitHound, Nemesis, and everyone that has let me bounce ideas off of them 😃
 - **Praetorian** - NoseyParker
 - **TruffleSecurity** - TruffleHog
 - **LeakTK** - fake-leaks testing repository
