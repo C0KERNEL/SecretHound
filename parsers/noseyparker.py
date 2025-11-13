@@ -87,8 +87,8 @@ class NoseyParkerParser(SecretsParser):
                         }
                     )
                     findings.append(finding)
-                # Handle filesystem provenance kind
-                elif prov.get('kind') == 'filesystem':
+                # Handle filesystem and file provenance kinds
+                elif prov.get('kind') in ['filesystem', 'file']:
                     file_path = prov.get('path', '')
                     finding = SecretFinding(
                         secret_type=rule_text_id,  # Use rule_text_id for taxonomy lookup
