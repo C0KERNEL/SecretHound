@@ -3,7 +3,7 @@
   <img src="assets/logo.png" alt="SecretHound Logo" width="400"/>
 </p>
 
-SecretHound converts secret scanning results from various sources into a BloodHound OpenGraph format. It leverages [@p0dalirius's bhopengraph library](https://github.com/p0dalirius/bhopengraph).
+SecretHound converts secret scanning results from various sources into a BloodHound OpenGraph format. You can read the blog [here](https://specterops.io/blog/2025/11/13/taming-the-attack-graph-a-many-subgraphs-approach-to-attack-path-analysis/). It leverages @p0dalirius's [bhopengraph](https://github.com/p0dalirius/bhopengraph) library.
 
 **Supported Scanners:**
 - GitHub Secret Scanning
@@ -210,8 +210,6 @@ Taking advantage of the kind system:
 // Find all secrets
 MATCH (s:Secret) RETURN s
 
-// Find all AWS-related nodes
-MATCH (s:AWSBase) RETURN s
 
 // Find only AWS Secret Access Keys
 MATCH (s:AWSSecret) RETURN s
@@ -221,6 +219,18 @@ MATCH (s:StargateNetwork) RETURN s
 
 // Find paths using secrets
 MATCH p=(r:StargateNetwork)-[:ContainsCredentialsFor]->(s:StargateNetwork)
+RETURN p
+
+// Find hybrid attack paths to Azure
+MATCH p=(s:StargateNetwork)-[r*..]->(t:AZBase)
+RETURN p
+
+// Find hybrid attack paths to AWS
+MATCH p=(s:StargateNetwork)-[r*..]->(t:AWSBase)
+RETURN p
+
+// Find hybrid attack paths to GCP
+MATCH p=(s:StargateNetwork)-[r*..]->(t:GCPBase)
 RETURN p
 ```
 
