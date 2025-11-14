@@ -7,6 +7,8 @@ SecretHound converts secret scanning results from various sources into a BloodHo
 
 This project's primary goal is to expand the graph quickly using a single edge: `ContainsCredentialsFor`. Currently, SecretHound will map secrets to 141 technology subgraphs (using the default `taxonomy/taxonomy.json` system). This translates to potentially 141 possible hybrid attack paths. It includes existing subgraphs accessible through the `kind` array values of: `AZBase` for Azure/Entra ID, `GHBase` for GitHub, and `GCPBase` for Google Cloud Platform. Generic secrets get mapped to an abstract `kind` (i.e., `StargateNetwork`) that is a catchall. Most of my testing was around git repositories.
 
+Please submit an issue, submit a PR, or reach out on X @c0kernel if you have issues / feedback👍
+
 **Supported Scanners:**
 - GitHub Secret Scanning
 - NoseyParker
