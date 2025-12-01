@@ -1,5 +1,6 @@
 import json
 import logging
+import base64
 from pathlib import Path
 from typing import Dict, List, Any
 
@@ -10,6 +11,39 @@ logger = logging.getLogger(__name__)
 
 class GitHubSecretScannerParser(SecretsParser):
     """Parser for GitHub Secret Scanning API output"""
+
+    def __init__(self, redact_secrets: bool = True, custom_mappings=None, taxonomy=None,
+                 scanner_name: str = "github", organization_id: str = None):
+        """
+        Initialize the GitHub parser
+
+        Args:
+            redact_secrets: If True, redact actual secret values in output
+            custom_mappings: Custom mappings from secret types to BloodHound nodes
+            taxonomy: Taxonomy instance for rule ID lookups
+            scanner_name: Name of scanner for taxonomy lookups
+            organization_id: Optional GitHub organization ID for GitHound-compatible IDs
+        """
+        super().__init__(redact_secrets, custom_mappings, taxonomy, scanner_name)
+        self.organization_id = organization_id
+
+    def generate_githound_id(self, org_id: str, repo_node_id: str, alert_number: int) -> str:
+        """
+        Generate GitHound-compatible alert ID
+
+        Matches the format from GitHound PowerShell:
+        $alertId = [Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes("SSA_{org.id}_{repo.node_id}_{alert.number}"))
+
+        Args:
+            org_id: GitHub organization ID
+            repo_node_id: Repository node_id (e.g., "MDEwOlJlcG9zaXRvcnk...")
+            alert_number: Alert number
+
+        Returns:
+            Base64-encoded alert ID matching GitHound format
+        """
+        alert_string = f"SSA_{org_id}_{repo_node_id}_{alert_number}"
+        return base64.b64encode(alert_string.encode('ascii')).decode('ascii')
 
     def parse_file(self, file_path: Path) -> List[SecretFinding]:
         """Parse GitHub Secret Scanning API JSON file"""
@@ -41,6 +75,14 @@ class GitHubSecretScannerParser(SecretsParser):
           "secret_type": "adafruit_io_key",
           "secret_type_display_name": "Adafruit IO Key",
           "secret": "aio_XXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+          "repository": {  # Present in org-level alerts
+            "id": 123456,
+            "node_id": "MDEwOlJlcG9zaXRvcnkxMjM0NTY=",
+            "name": "repo",
+            "full_name": "owner/repo",
+            "html_url": "https://github.com/owner/repo",
+            ...
+          },
           "first_location_detected": {
             "path": "/example/secrets.txt",
             "start_line": 1,
@@ -66,9 +108,20 @@ class GitHubSecretScannerParser(SecretsParser):
         created_at = data.get('created_at')
         html_url = data.get('html_url', '')
 
-        # Extract repository information from URL
+        # Extract repository information - prioritize repository object (org-level alerts)
         repository = None
-        if html_url:
+        repo_node_id = None
+        repo_id = None
+        repo_object = data.get('repository', {})
+
+        if repo_object:
+            # Org-level alerts include full repository object
+            repo_node_id = repo_object.get('node_id')
+            repo_id = repo_object.get('id')
+            repository = repo_object.get('html_url')
+            logger.debug(f"Found repository object: node_id={repo_node_id}, id={repo_id}, url={repository}")
+        elif html_url:
+            # Repo-level alerts - extract from URL
             # Extract repo from URL like: https://github.com/owner/repo/security/secret-scanning/1
             parts = html_url.split('github.com/')
             if len(parts) > 1:
@@ -94,6 +147,42 @@ class GitHubSecretScannerParser(SecretsParser):
             'publicly_leaked': data.get('publicly_leaked'),
             'multi_repo': data.get('multi_repo'),
         }
+
+        # Add GitHound-related metadata if available
+        if repo_node_id:
+            metadata['repository_node_id'] = repo_node_id
+        if repo_id:
+            metadata['repository_id'] = repo_id
+
+        # Extract organization ID from repository owner if available, or use provided org ID
+        org_id = None
+        if repo_object:
+            owner = repo_object.get('owner', {})
+            if owner:
+                org_id = owner.get('id')
+                if org_id:
+                    metadata['organization_id'] = org_id
+
+        # Use provided organization ID if not found in data
+        if not org_id and self.organization_id:
+            org_id = self.organization_id
+            metadata['organization_id'] = org_id
+            logger.debug(f"Using provided organization ID: {org_id}")
+
+        # Generate GitHound-compatible ID if we have all required components
+        if org_id and repo_node_id and alert_number:
+            githound_id = self.generate_githound_id(str(org_id), repo_node_id, alert_number)
+            metadata['githound_id'] = githound_id
+            logger.debug(f"Generated GitHound ID: {githound_id} for alert {alert_number}")
+        else:
+            missing = []
+            if not org_id:
+                missing.append('organization_id')
+            if not repo_node_id:
+                missing.append('repository_node_id')
+            if not alert_number:
+                missing.append('alert_number')
+            logger.debug(f"Cannot generate GitHound ID, missing: {', '.join(missing)}")
 
         # Add first location details if available
         if first_location:

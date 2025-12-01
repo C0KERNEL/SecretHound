@@ -77,6 +77,7 @@ python secrethound.py -t {github,noseyparker,trufflehog,nemesis} -i INPUT -o OUT
 | `--taxonomy` | Taxonomy configuration file (default: taxonomy/taxonomy.json) |
 | `--no-redact` | Include full secrets (DANGEROUS - use with caution as your nodes in BloodHound will contain the secrets) |
 | `--source-kind` | Source kind for BloodHound OpenGraph (default: StargateNetwork) |
+| `--github-org-id` | GitHub organization ID for GitHound-compatible alert IDs (GitHub scanner only) |
 | `-v, --verbose` | Enable verbose logging |
 
 ## Technology Taxonomy System
@@ -178,13 +179,43 @@ python custom_icons.py --token YOUR_TOKEN --url http://bloodhound.local:8080/api
 
 ## Scanner-Specific Examples
 ### GitHub Secret Scanning
+
+#### GitHound Integration
+SecretHound automatically generates GitHound-compatible alert IDs when processing organization-level GitHub Secret Scanning alerts. This allows SecretHound's secret nodes to seamlessly integrate with GitHound's existing graph data.
+
+**How it works:**
+- When processing org-level alerts (`/orgs/{org}/secret-scanning/alerts`), SecretHound extracts the organization ID, repository node_id, and alert number
+- These are used to generate a base64-encoded ID matching GitHound's format: `base64("SSA_{org.id}_{repo.node_id}_{alert.number}")`
+- The generated ID is used as the node ID in BloodHound, ensuring compatibility with GitHound nodes
+
+**Organization-Level Alerts (Recommended for GitHound Integration):**
 ```bash
-# Export alerts from GitHub
+# Export org-level alerts (includes repository object with owner info)
 gh api /orgs/YOUR_ORG/secret-scanning/alerts > github_alerts.json
 
-# Convert to BloodHound OpenGraph
+# Convert to BloodHound OpenGraph with GitHound-compatible IDs
 python secrethound.py -t github -i github_alerts.json -o og_secrets.json
+
+# The output will automatically use GitHound-compatible node IDs
 ```
+
+**Repository-Level Alerts:**
+```bash
+# Export repo-level alerts
+gh api /repos/OWNER/REPO/secret-scanning/alerts > github_alerts.json
+
+# Convert to BloodHound OpenGraph (uses hash-based IDs)
+python secrethound.py -t github -i github_alerts.json -o og_secrets.json
+
+# Optionally provide organization ID for GitHound compatibility (if repo node_id is available)
+python secrethound.py -t github -i github_alerts.json -o og_secrets.json --github-org-id 12345
+```
+
+**Benefits of GitHound Integration:**
+- Secret nodes from SecretHound and GitHound share the same node IDs
+- No duplicate nodes when importing both GitHound and SecretHound data
+- Seamless cross-referencing between the two tools' outputs
+- Unified attack graph showing both GitHub infrastructure and discovered secrets
 
 ### NoseyParker
 ```bash

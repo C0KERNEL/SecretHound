@@ -259,8 +259,8 @@ class BloodHoundGraphBuilder:
             finding: SecretFinding object
             parser: SecretsParser instance for mapping logic
         """
-        # Generate secret node ID - always include the actual secret value for uniqueness
-        # even when redacting, so each unique secret gets its own node
+        # Always generate hash-based secret node ID for the technology-specific secret
+        # This creates the actual secret node in the StargateNetwork
         secret_id = parser.generate_node_id(
             finding.secret_type,
             finding.secret_value,  # Always use actual value for ID generation
@@ -268,6 +268,7 @@ class BloodHoundGraphBuilder:
             finding.file_path or "",
             str(finding.line_number) if finding.line_number else ""
         )
+        logger.debug(f"Using generated hash ID for secret node: {secret_id[:16]}...")
 
         # Create secret node if it doesn't exist
         if secret_id not in self.created_nodes:
@@ -324,8 +325,23 @@ class BloodHoundGraphBuilder:
             self.created_nodes.add(secret_id)
             logger.debug(f"Created secret node: {secret_id} with kinds: {kinds}")
 
-        # Create repository node and edge if repository information exists
-        if finding.repository:
+        # Create edges based on whether this is a GitHound-compatible alert or other scanner
+        if 'githound_id' in finding.metadata:
+            # GitHub alert with GitHound ID: Create edge from GHSecretScanningAlert to secret
+            # GitHound creates the GHSecretScanningAlert node and GHRepository -> GHSecretScanningAlert edge
+            # Use add_edge_without_validation since the GHSecretScanningAlert node is created by GitHound
+            githound_id = finding.metadata['githound_id']
+            edge = Edge(
+                start_node=githound_id,
+                end_node=secret_id,
+                kind="ContainsCredentialsFor",
+                start_match_by="id",
+                end_match_by="id"
+            )
+            self.graph.add_edge_without_validation(edge)
+            logger.debug(f"Created edge: GHSecretScanningAlert({githound_id}) -> Secret({secret_id[:16]}...)")
+        elif finding.repository:
+            # Other scanners: Create repository node and edge from repository to secret
             repo_id = self._create_repository_node(finding.repository)
 
             if repo_id:
@@ -474,6 +490,11 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
     )
 
     parser.add_argument(
+        '--github-org-id',
+        help='GitHub organization ID (for github type) - used to generate GitHound-compatible alert IDs'
+    )
+
+    parser.add_argument(
         '-v', '--verbose',
         action='store_true',
         help='Enable verbose logging'
@@ -511,7 +532,8 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
             redact_secrets=redact_secrets,
             custom_mappings=custom_mappings,
             taxonomy=taxonomy,
-            scanner_name='github'
+            scanner_name='github',
+            organization_id=args.github_org_id
         )
     elif args.type == 'noseyparker':
         secret_parser = NoseyParkerParser(
