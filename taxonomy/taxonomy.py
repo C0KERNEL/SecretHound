@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-Technology Taxonomy Module for SecretHound
+Technology Taxonomy for SecretHound
 
-This module provides centralized taxonomy for mapping scanner-specific rule IDs
-to technology platforms and their corresponding BloodHound node kinds.
+Provides taxonomy for mapping scanner-specific rule IDs to technology platforms
+and their corresponding BloodHound node kinds.
 """
 
 import json
@@ -26,20 +26,21 @@ class Technology:
 
 class Taxonomy:
     """
-    Centralized technology taxonomy for mapping scanner outputs to BloodHound nodes
+    Technology taxonomy for mapping scanner outputs to BloodHound nodes
 
-    This class loads a taxonomy configuration file that maps scanner-specific
-    rule IDs (e.g., NoseyParker rule IDs) to technology platforms, which then
-    map to BloodHound node kinds.
+    Loads the taxonomy configuration that maps scanner-specific rule IDs
+    to technology platforms and their corresponding BloodHound node kinds.
     """
 
-    def __init__(self, taxonomy_file: Path):
+    def __init__(self, taxonomy_file: Path = None):
         """
         Initialize taxonomy from a JSON configuration file
 
         Args:
-            taxonomy_file: Path to taxonomy JSON file
+            taxonomy_file: Path to taxonomy JSON file (defaults to taxonomy/taxonomy.json)
         """
+        if taxonomy_file is None:
+            taxonomy_file = Path('taxonomy/taxonomy.json')
         self.taxonomy_file = taxonomy_file
         self.technologies: Dict[str, Technology] = {}
         self.scanner_mappings: Dict[str, Dict[str, str]] = {}

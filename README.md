@@ -15,7 +15,6 @@ For a detailed discussion of the multi-subgraph approach to attack path analysis
 - **Hybrid Attack Path Analysis**: Maps discovered secrets to 141 technology subgraphs
 - **Standardized Graph Integration**: Uses the `ContainsCredentialsFor` edge type to connect credentials to accessible infrastructure
 - **Technology Taxonomy**: Automated classification system supporting major cloud providers (AWS, Azure, GCP) and enterprise services
-- **Flexible Configuration**: Three taxonomy levels (comprehensive, minimal, flat) for different analysis needs
 
 ### Supported Scanners
 
@@ -80,43 +79,12 @@ python secrethound.py -t {github,noseyparker,trufflehog,nemesis} -i INPUT -o OUT
 | `-t, --type` | Scanner type: github, noseyparker, trufflehog, or nemesis (required) |
 | `-i, --input` | Input file path (JSON or JSONL) (required) |
 | `-o, --output` | Output BloodHound JSON file path (required) |
-| `--taxonomy` | Taxonomy configuration file (default: taxonomy/taxonomy.json) |
 | `--no-redact` | Include full secrets in output (WARNING: Sensitive data will be stored in BloodHound nodes) |
 | `--source-kind` | Source kind for BloodHound OpenGraph (default: StargateNetwork) |
 | `-v, --verbose` | Enable verbose logging |
 
-## Technology Taxonomy System
-SecretHound uses a centralized taxonomy system to automatically categorize secrets by technology with colors. The taxonomy maps scanner-specific rule IDs to BloodHound node types.
-
-### Built-in Taxonomy Files
-- **taxonomy.json** - Comprehensive taxonomy (default)
-  - Covers 200+ TruffleHog detectors
-  - All NoseyParker and GitHub Secret Scanning rules mapped
-  - Ideal for detailed analysis
-
-- **taxonomy_minimal.json** - Minimal taxonomy highlighting ~25 major technologies
-  - Focuses on most common cloud providers and services
-  - Cleaner BloodHound graphs with less node kinds
-
-- **taxonomy_flat.json** - Flat taxonomy with no technology classification
-  - All secrets categorized as generic "Secret" kind
-  - Simplest graph structure
-  - Ideal for basic secret discovery without technology-specific analysis
-
-See [TAXONOMY_GUIDE.md](taxonomy/TAXONOMY_GUIDE.md) for complete documentation.
-
-### Using Different Taxonomies
-
-```bash
-# Use default comprehensive taxonomy
-python secrethound.py -t trufflehog -i input.jsonl -o output.json
-
-# Use minimal taxonomy for cleaner graphs
-python secrethound.py -t noseyparker -i input.json -o output.json --taxonomy taxonomy/taxonomy_minimal.json
-
-# Use flat taxonomy - all secrets as generic "Secret"
-python secrethound.py -t github -i input.json -o output.json --taxonomy taxonomy/taxonomy_flat.json
-```
+## Technology Taxonomy
+SecretHound uses a comprehensive taxonomy to automatically categorize secrets by technology. The taxonomy maps scanner-specific rule IDs to BloodHound node types, covering 200+ TruffleHog detectors and all NoseyParker and GitHub Secret Scanning rules.
 
 ### Node Kind System
 All nodes and edges produced by SecretHound are tagged with the `StargateNetwork` source_kind. This naming convention reflects the tool's core functionality: discovered credentials serve as "portals" that enable access to different technology subgraphs within the BloodHound attack graph. When a credential is found in one environment (such as a Git repository), it can provide direct access to an entirely separate infrastructure subgraph (such as AWS, Azure, or GCP), similar to a network of interconnected gateways.
@@ -172,11 +140,8 @@ See `taxonomy/taxonomy.json` for the complete list technologies.
 After generating your BloodHound data, register the technology icons:
 
 ```bash
-# Register icons from comprehensive taxonomy
+# Register icons in BloodHound
 python custom_icons.py --token YOUR_BLOODHOUND_TOKEN
-
-# Register icons from minimal taxonomy
-python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy/taxonomy_minimal.json
 
 # Use custom BloodHound URL
 python custom_icons.py --token YOUR_TOKEN --url http://bloodhound.local:8080/api/v2/custom-nodes

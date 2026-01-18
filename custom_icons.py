@@ -59,43 +59,33 @@ Examples:
   # Register icons from taxonomy
   python custom_icons.py --token YOUR_TOKEN
 
-  # Use minimal taxonomy
-  python custom_icons.py --token YOUR_TOKEN --taxonomy taxonomy/taxonomy_minimal.json
-
   # Use custom BloodHound URL
   python custom_icons.py --token YOUR_TOKEN --url http://bloodhound.local:8080/api/v2/custom-nodes
         """
     )
-    
+
     parser.add_argument(
         '--token',
         required=True,
         help='BloodHound API token'
     )
-    
+
     parser.add_argument(
         '--url',
         default=DEFAULT_URL,
         help=f'BloodHound API URL (default: {DEFAULT_URL})'
     )
-    
-    parser.add_argument(
-        '--taxonomy',
-        default=DEFAULT_TAXONOMY_FILE,
-        type=Path,
-        help=f'Path to taxonomy JSON file (default: {DEFAULT_TAXONOMY_FILE})'
-    )
-    
+
     args = parser.parse_args()
-    
+
     headers = {
         "Authorization": f"Bearer {args.token}",
         "Content-Type": "application/json"
     }
-    
+
     # Load taxonomy colors
-    print(f"Loading taxonomy from {args.taxonomy}")
-    node_colors = load_taxonomy_colors(args.taxonomy)
+    print(f"Loading taxonomy from {DEFAULT_TAXONOMY_FILE}")
+    node_colors = load_taxonomy_colors(Path(DEFAULT_TAXONOMY_FILE))
     print(f"Found {len(node_colors)} node kinds to register\n")
     
     # Build icon definitions dictionary
