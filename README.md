@@ -3,20 +3,26 @@
   <img src="assets/logo.png" alt="SecretHound Logo" width="400"/>
 </p>
 
-SecretHound converts secret scanning results from various sources into a BloodHound OpenGraph format. You can read the associated blog [here](https://specterops.io/blog/2025/11/13/taming-the-attack-graph-a-many-subgraphs-approach-to-attack-path-analysis/). It leverages @p0dalirius's [bhopengraph](https://github.com/p0dalirius/bhopengraph) library.
+## Overview
 
-This project's primary goal is to expand the graph quickly using a single edge: `ContainsCredentialsFor`. Currently, SecretHound will map secrets to 141 technology subgraphs (using the default `taxonomy/taxonomy.json` system). This translates to potentially 141 possible hybrid attack paths. It includes existing subgraphs accessible through the `kind` array values of: `AZBase` for Azure/Entra ID, `GHBase` for GitHub, and `GCPBase` for Google Cloud Platform. Generic secrets get mapped to an abstract `kind` (i.e., `StargateNetwork`) that is a catchall. Most of my testing was around git repositories.
+SecretHound is a BloodHound OpenGraph extension for secret scanning results. By converting credential discoveries from multiple security scanning tools into BloodHound's OpenGraph format, SecretHound enables security teams to identify and analyze hybrid attack paths that span multiple technology environments.
 
-Please submit an issue, submit a PR, or reach out on X @c0kernel if you have issues / feedback👍
+For a detailed discussion of the multi-subgraph approach to attack path analysis, see the associated [blog post](https://specterops.io/blog/2025/11/13/taming-the-attack-graph-a-many-subgraphs-approach-to-attack-path-analysis/). SecretHound is built on the [bhopengraph](https://github.com/p0dalirius/bhopengraph) library by @p0dalirius.
 
-**Supported Scanners:**
+### Key Features
+
+- **Multi-Scanner Support**: Integrates with GitHub Secret Scanning, NoseyParker, TruffleHog, and Nemesis
+- **Hybrid Attack Path Analysis**: Maps discovered secrets to 141 technology subgraphs
+- **Standardized Graph Integration**: Uses the `ContainsCredentialsFor` edge type to connect credentials to accessible infrastructure
+- **Technology Taxonomy**: Automated classification system supporting major cloud providers (AWS, Azure, GCP) and enterprise services
+- **Flexible Configuration**: Three taxonomy levels (comprehensive, minimal, flat) for different analysis needs
+
+### Supported Scanners
+
 - GitHub Secret Scanning
 - NoseyParker
 - TruffleHog
 - Nemesis
-
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![BloodHound](https://img.shields.io/badge/BloodHound-OpenGraph-red.svg)](https://bloodhound.specterops.io/)
 
 ## Installation
 ```bash
@@ -75,7 +81,7 @@ python secrethound.py -t {github,noseyparker,trufflehog,nemesis} -i INPUT -o OUT
 | `-i, --input` | Input file path (JSON or JSONL) (required) |
 | `-o, --output` | Output BloodHound JSON file path (required) |
 | `--taxonomy` | Taxonomy configuration file (default: taxonomy/taxonomy.json) |
-| `--no-redact` | Include full secrets (DANGEROUS - use with caution as your nodes in BloodHound will contain the secrets) |
+| `--no-redact` | Include full secrets in output (WARNING: Sensitive data will be stored in BloodHound nodes) |
 | `--source-kind` | Source kind for BloodHound OpenGraph (default: StargateNetwork) |
 | `-v, --verbose` | Enable verbose logging |
 
@@ -113,9 +119,11 @@ python secrethound.py -t github -i input.json -o output.json --taxonomy taxonomy
 ```
 
 ### Node Kind System
-Nodes and edges produced by this tool all have a `StargateNetwork` source_kind. I enjoyed the SG-1 TV show :nerd_face:, and it felt like a nice analogy to describe the behavior. You find a credential-at-rest somewhere in an environment and it can be used to teleport you into another subgraph. This reminded me of the Stargate Network in the TV show. I might switch to an analogy involving the Valve game: Portal at somepoint. Either way, I needed to categorize everything that this tool produces. Secrets are assigned either a specific `*Secret` kind based on a `*Base` or generically a `Secret` kind.
+All nodes and edges produced by SecretHound are tagged with the `StargateNetwork` source_kind. This naming convention reflects the tool's core functionality: discovered credentials serve as "portals" that enable access to different technology subgraphs within the BloodHound attack graph. When a credential is found in one environment (such as a Git repository), it can provide direct access to an entirely separate infrastructure subgraph (such as AWS, Azure, or GCP), similar to a network of interconnected gateways.
 
-Specific specific `AWSSecret` kind based on a `AWSBase` example:
+Secrets are categorized using a dual-classification system: technology-specific secrets receive a `*Secret` kind paired with their corresponding `*Base` kind, while unclassified secrets are assigned a generic `Secret` kind.
+
+Specific `AWSSecret` kind based on `AWSBase` example:
 ```json
 {
   "kinds": ["AWSSecret", "AWSBase"],
@@ -136,8 +144,6 @@ Generic `Secret` example:
   }
 }
 ```
-
-Note: `StargateNetwork` appears in the `metadata.source_kind` field of the OpenGraph JSON, not in individual node kinds.
 
 This enables powerful Cypher queries across `kind` values:
 - `MATCH (s:StargateNetwork) RETURN s` - All nodes generated by this tool
@@ -216,8 +222,9 @@ python scripts/fetch_nemesis_findings.py --api-key <Hasura GraphQL API key> > ne
 python secrethound.py -t nemesis -i nemesis_export.json -o og_secrets.json
 ```
 
-## Example BloodHound Queries
-Taking advantage of the kind system:
+## BloodHound Query Examples
+
+The following Cypher queries demonstrate how to leverage SecretHound's node kind system for attack path analysis:
 
 ```cypher
 // Find all secrets
@@ -247,17 +254,21 @@ MATCH p=(s:StargateNetwork)-[r*..]->(t:GCPBase)
 RETURN p
 ```
 
-### OpenGraph Compatibility
-SecretHound is designed to be compatible with existing BloodHound OpenGraph extensions:
+## OpenGraph Compatibility
+
+SecretHound is designed to integrate with existing (and future) BloodHound OpenGraph extensions:
 
 **Compatible Extensions:**
-- [ ] [GitHound](https://github.com/SpecterOps/GitHound) - GitHub repository and user mapping (work in progress)
-- [x] [GCP-Hound](https://github.com/F41zK4r1m/GCP-Hound) - GCP technology subgraph - Adds nodes with `GCPBase` kind
+- [GitHound](https://github.com/SpecterOps/GitHound) - GitHub repository and user mapping (integration in progress)
+- [GCP-Hound](https://github.com/F41zK4r1m/GCP-Hound) - GCP technology subgraph using `GCPBase` kind
 
 ## Acknowledgments
-- **SpecterOps** - BloodHound, OpenGraph, GitHound, Nemesis, and everyone that has let me bounce ideas off of them 😃
-- **Praetorian** - NoseyParker
-- **TruffleSecurity** - TruffleHog
+
+SecretHound builds upon the work of several open-source projects and organizations:
+
+- **SpecterOps** - BloodHound, OpenGraph specification, GitHound, and Nemesis platform
+- **Praetorian** - NoseyParker secret scanner
+- **TruffleSecurity** - TruffleHog secret detection
 - **LeakTK** - fake-leaks testing repository
 - **p0dalirius** - bhopengraph library
 
