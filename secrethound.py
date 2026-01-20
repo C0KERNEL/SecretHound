@@ -457,13 +457,6 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
     )
 
     parser.add_argument(
-        '--taxonomy',
-        type=Path,
-        default=Path('taxonomy/taxonomy.json'),
-        help='Technology taxonomy file for mapping rule IDs to node kinds (default: taxonomy/taxonomy.json)'
-    )
-    
-    parser.add_argument(
         '--nemesis-url',
         help='Nemesis API URL (for nemesis type)'
     )
@@ -485,17 +478,18 @@ Visit https://github.com/C0KERNEL/SecretHound for more information.
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
-    # Load taxonomy if the file exists
+    # Load taxonomy from the standard location
     taxonomy = None
-    if args.taxonomy.exists():
+    taxonomy_path = Path('taxonomy/taxonomy.json')
+    if taxonomy_path.exists():
         try:
-            taxonomy = Taxonomy(args.taxonomy)
-            logger.info(f"Loaded taxonomy from {args.taxonomy}")
+            taxonomy = Taxonomy(taxonomy_path)
+            logger.info(f"Loaded taxonomy from {taxonomy_path}")
         except Exception as e:
-            logger.warning(f"Failed to load taxonomy from {args.taxonomy}: {e}")
+            logger.warning(f"Failed to load taxonomy from {taxonomy_path}: {e}")
             logger.warning("Continuing without taxonomy - secrets will default to 'Secret' kind")
     else:
-        logger.warning(f"Taxonomy file not found: {args.taxonomy}")
+        logger.warning(f"Taxonomy file not found: {taxonomy_path}")
         logger.warning("Continuing without taxonomy - secrets will default to 'Secret' kind")
 
     # Load custom mappings if provided (legacy support)
